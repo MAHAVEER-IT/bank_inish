@@ -1,6 +1,11 @@
 import 'package:bank/sbi.dart';
 import 'package:flutter/material.dart';
 
+import 'indian.dart';
+import 'kvb.dart';
+import 'login.dart';
+import 'union.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -14,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Urbanist',
       ),
-      home: App(),
+      home: Login(),
     );
   }
 }
@@ -215,13 +220,8 @@ class SBIPage extends StatelessWidget {
 class IndianBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Indian Bank Page'),
-      ),
-      body: Center(
-        child: Text('This is the Indian Bank page'),
-      ),
+    return MaterialApp(
+      home: indian(),
     );
   }
 }
@@ -229,13 +229,8 @@ class IndianBankPage extends StatelessWidget {
 class UnionBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Union Bank Page'),
-      ),
-      body: Center(
-        child: Text('This is the Union Bank page'),
-      ),
+    return MaterialApp(
+      home: union(),
     );
   }
 }
@@ -243,13 +238,8 @@ class UnionBankPage extends StatelessWidget {
 class KarurVysyaBankPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Karur Vysya Bank Page'),
-      ),
-      body: Center(
-        child: Text('This is the Karur Vysya Bank page'),
-      ),
+    return MaterialApp(
+      home: kvb(),
     );
   }
 }

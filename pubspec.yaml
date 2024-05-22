@@ -81,6 +81,10 @@ flutter:
     - images/atm.png
     - images/banknear.png
     - images/custem.png
+    - images/apple.png
+    - images/facebook.png
+    - images/google.png
+    - images/image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
