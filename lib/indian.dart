@@ -51,7 +51,7 @@ class india extends StatelessWidget {
         ),
         GridItem(
           imagePath: 'images/nearbylocation.jpg',
-          buttonText: 'Nearby Indian ATM',
+          buttonText: 'Indian ATM',
           onPressed: (context) {
             _launchGoogleMaps(
                 query: 'sbi+atm'); // Call the function with 'sbi+atm' query
@@ -84,7 +84,7 @@ class india extends StatelessWidget {
         ),
         GridItem(
           imagePath: 'images/banknear.png',
-          buttonText: 'Nearby Indian bank',
+          buttonText: 'Indian Bank',
           onPressed: (context) {
             _launchGoogleMaps(
                 query: 'sbi+bank'); // Call the function with 'sbi+bank' query
@@ -129,9 +129,9 @@ class india extends StatelessWidget {
             ],
           ),
         ),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.blue,
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.lightBlueAccent,
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -264,7 +264,7 @@ class _holidayState extends State<holiday> {
         ),
         backgroundColor: Colors.lightBlue[200],
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(

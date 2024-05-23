@@ -19,7 +19,7 @@ class MySplashScreen extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: size.height * 0.53,
+                height: size.height * 0.5,
                 width: size.width,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -36,7 +36,7 @@ class MySplashScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: size.height * 0.6,
+              top: size.height * 0.53,
               left: 0,
               right: 0,
               child: Center(

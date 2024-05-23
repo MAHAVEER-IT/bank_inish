@@ -55,7 +55,7 @@ class kvb extends StatelessWidget {
           onPressed: (context) {
             _launchGoogleMaps(
                 query:
-                    'KARUR VYSYA+atm'); // Call the function with 'sbi+atm' query
+                    'near+kvb+atm'); // Call the function with 'sbi+atm' query
           },
           iconData: Icons.location_pin,
         ),
@@ -131,9 +131,9 @@ class kvb extends StatelessWidget {
             ],
           ),
         ),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime,
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.lime[100],
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -180,7 +180,7 @@ class kvb extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.indigo,
+                            backgroundColor: Colors.green[400],
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -263,9 +263,9 @@ class _holidayState extends State<holiday> {
             Icon(Icons.calendar_month),
           ],
         ),
-        backgroundColor: Colors.lightBlue[200],
+        backgroundColor: Colors.lime,
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.lime[100],
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
@@ -289,7 +289,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -330,7 +330,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -371,7 +371,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -412,7 +412,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -453,7 +453,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -494,7 +494,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -535,7 +535,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -576,7 +576,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -617,7 +617,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -658,7 +658,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -699,7 +699,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -740,7 +740,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -781,7 +781,7 @@ class _holidayState extends State<holiday> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor: Colors.lime,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -919,7 +919,7 @@ class HolidayScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - January 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime,
       ),
       body: ListView.builder(
         itemCount: januaryHolidays.length,
@@ -987,7 +987,7 @@ class feb extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - February 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime,
       ),
       body: ListView.builder(
         itemCount: FevHolidays.length,
@@ -1071,7 +1071,7 @@ class march extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - March 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: marchHoliday.length,
@@ -1213,7 +1213,7 @@ class april extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - April 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: aprilHoliday.length,
@@ -1298,7 +1298,7 @@ class may extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - May 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: mayHoliday.length,
@@ -1377,7 +1377,7 @@ class june extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - JULY 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: apHoliday.length,
@@ -1466,7 +1466,7 @@ class july extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - JULY 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: juHoliday.length,
@@ -1550,8 +1550,8 @@ class augest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SBI Bank Holidays - AUGUST 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        title: Text('KVB Bank Holidays - AUGUST 2024'),
+        backgroundColor: Colors.lime,
       ),
       body: ListView.builder(
         itemCount: auHOliday.length,
@@ -1650,7 +1650,7 @@ class september extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYASYA Bank Holidays - SEPTEMBER 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: sepHoliday.length,
@@ -1745,7 +1745,7 @@ class october extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('KARUR VYSYA Bank Holidays - OCTOBER 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: ocHoliday.length,
@@ -1854,8 +1854,8 @@ class november extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SBI Bank Holidays - NOVEMBER 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        title: Text('KVB Bank Holidays - NOVEMBER 2024'),
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: noHoliday.length,
@@ -1957,8 +1957,8 @@ class december extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SBI Bank Holidays - DECEMBER 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        title: Text('KVB Bank Holidays - DECEMBER 2024'),
+        backgroundColor: Colors.lime[100],
       ),
       body: ListView.builder(
         itemCount: deHoliday.length,
@@ -1994,8 +1994,8 @@ class week extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SBI Bank Holidays - WEEK-END 2024'),
-        backgroundColor: Colors.lightBlue[100],
+        title: Text('KVB Bank Holidays - WEEK-END 2024'),
+        backgroundColor: Colors.lime[100],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -2152,7 +2152,7 @@ class _BankInterestCalculatorState extends State<BankInterestCalculator> {
               ),
             ],
           ),
-          backgroundColor: Colors.lightBlue[100],
+          backgroundColor: Colors.lime[100],
         ),
         body: Padding(
           padding: EdgeInsets.all(20.0),

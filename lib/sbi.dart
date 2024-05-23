@@ -54,7 +54,8 @@ class sbi extends StatelessWidget {
           buttonText: 'Near SBI ATM',
           onPressed: (context) {
             _launchGoogleMaps(
-                query: 'sbi+atm'); // Call the function with 'sbi+atm' query
+                query:
+                    'near+sbi+atm'); // Call the function with 'sbi+atm' query
           },
           iconData: Icons.location_pin,
         ),

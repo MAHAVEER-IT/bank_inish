@@ -51,10 +51,11 @@ class union extends StatelessWidget {
         ),
         GridItem(
           imagePath: 'images/nearbylocation.jpg',
-          buttonText: 'Near UNION BANK ATM',
+          buttonText: 'UNION ATM',
           onPressed: (context) {
             _launchGoogleMaps(
-                query: 'near+union+atm'); // Call the function with 'sbi+atm' query
+                query:
+                    'near+union+atm'); // Call the function with 'sbi+atm' query
           },
           iconData: Icons.location_pin,
         ),
@@ -84,10 +85,11 @@ class union extends StatelessWidget {
         ),
         GridItem(
           imagePath: 'images/banknear.png',
-          buttonText: 'Near UNION bank',
+          buttonText: 'UNION BANK',
           onPressed: (context) {
             _launchGoogleMaps(
-                query: 'near+union+bank'); // Call the function with 'sbi+bank' query
+                query:
+                    'near+union+bank'); // Call the function with 'sbi+bank' query
           },
           iconData: Icons.location_pin,
         ),
@@ -129,9 +131,9 @@ class union extends StatelessWidget {
             ],
           ),
         ),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.blueAccent,
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.redAccent[100],
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -827,7 +829,7 @@ class HolidayScreen extends StatelessWidget {
       date: "1st Jan 2024, Monday",
       holiday: "New Year’s Day",
       states:
-      "Rajasthan, Mizoram, Sikkim, Tamil Nadu, Puducherry, Nagaland, Telangana, Arunachal Pradesh, Manipur and Meghalaya.",
+          "Rajasthan, Mizoram, Sikkim, Tamil Nadu, Puducherry, Nagaland, Telangana, Arunachal Pradesh, Manipur and Meghalaya.",
     ),
     Holiday(
       date: "1st Jan 2024, Monday",
@@ -848,7 +850,7 @@ class HolidayScreen extends StatelessWidget {
       date: "14 Jan 2024, Friday",
       holiday: "Boghi",
       states:
-      "Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and Maharashtra",
+          "Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and Maharashtra",
     ),
     Holiday(
       date: "15 Jan 2024, Monday",
@@ -1025,7 +1027,7 @@ class march extends StatelessWidget {
       date: "8 Mar 2024, Friday",
       holiday: "Maha Shivaratri",
       states:
-      "National except for Arunachal Pradesh, Sikkim, Meghalaya, Puducherry, Nagaland, Lakshadweep, Tamil Nadu, Assam, Bihar, Madhya Pradesh, Goa, Mizoram, Andaman and Nicobar Islands, Manipur and West Bengal",
+          "National except for Arunachal Pradesh, Sikkim, Meghalaya, Puducherry, Nagaland, Lakshadweep, Tamil Nadu, Assam, Bihar, Madhya Pradesh, Goa, Mizoram, Andaman and Nicobar Islands, Manipur and West Bengal",
     ),
     Holiday(
       date: "22 Mar 2024, Friday",
@@ -1041,7 +1043,7 @@ class march extends StatelessWidget {
       date: "25 Mar 2024, Monday",
       holiday: "Holi",
       states:
-      "National holidays other than Tamil Nadu, Lakshadweep, Kerala, Karnataka, Delhi, Puducherry, Manipur, and West Bengal",
+          "National holidays other than Tamil Nadu, Lakshadweep, Kerala, Karnataka, Delhi, Puducherry, Manipur, and West Bengal",
     ),
     Holiday(
       date: "25 Mar 2024, Monday",
@@ -1134,7 +1136,7 @@ class april extends StatelessWidget {
       date: "9 Apr 2024, Tuesday",
       holiday: "Ugadi",
       states:
-      "Rajasthan, Gujarat, Goa, Karnataka, Andhra Pradesh, Jharkhand, and Telangana",
+          "Rajasthan, Gujarat, Goa, Karnataka, Andhra Pradesh, Jharkhand, and Telangana",
     ),
     Holiday(
       date: "11 Apr 2024, Thursday",
@@ -1165,7 +1167,7 @@ class april extends StatelessWidget {
       date: "14 Apr 2024, Sunday",
       holiday: "Dr Ambedkar Jayanti",
       states:
-      "Chhattisgarh, Tamil Nadu, Haryana, Himachal Pradesh, Arunachal Pradesh, Jammu and Kashmir, Odisha, Uttar Pradesh, Gujarat, Punjab, Rajasthan, Karnataka, Sikkim, Goa, Madhya Pradesh, Telangana, West Bengal, Andhra Pradesh, Jharkhand, Kerala, Bihar, and Uttarakhand",
+          "Chhattisgarh, Tamil Nadu, Haryana, Himachal Pradesh, Arunachal Pradesh, Jammu and Kashmir, Odisha, Uttar Pradesh, Gujarat, Punjab, Rajasthan, Karnataka, Sikkim, Goa, Madhya Pradesh, Telangana, West Bengal, Andhra Pradesh, Jharkhand, Kerala, Bihar, and Uttarakhand",
     ),
     Holiday(
       date: "14 Apr 2024, Sunday",
@@ -1191,7 +1193,7 @@ class april extends StatelessWidget {
       date: "17 Apr 2024, Wednesday",
       holiday: "Ram Navami",
       states:
-      "Sikkim, Odisha, Himachal Pradesh, Rajasthan, Haryana, Maharashtra, Daman and Diu, Gujarat, Chandigarh, Punjab, Uttarakhand, Madhya Pradesh, Bihar, Andaman and Nicobar Islands, Telangana, Uttar Pradesh, Andhra Pradesh and Dadra Nagar Haveli",
+          "Sikkim, Odisha, Himachal Pradesh, Rajasthan, Haryana, Maharashtra, Daman and Diu, Gujarat, Chandigarh, Punjab, Uttarakhand, Madhya Pradesh, Bihar, Andaman and Nicobar Islands, Telangana, Uttar Pradesh, Andhra Pradesh and Dadra Nagar Haveli",
     ),
     Holiday(
       date: "21 Apr 2024, Sunday",
@@ -1202,7 +1204,7 @@ class april extends StatelessWidget {
       date: "21 Apr 2024, Sunday",
       holiday: "Mahavir Jayanti",
       states:
-      "Punjab, Daman and Diu, Chandigarh, Uttar Pradesh, Karnataka, Rajasthan, Tamil Nadu, Gujarat, Haryana, Madhya Pradesh, DN, Delhi, Jharkhand, Maharashtra, and Lakshadweep",
+          "Punjab, Daman and Diu, Chandigarh, Uttar Pradesh, Karnataka, Rajasthan, Tamil Nadu, Gujarat, Haryana, Madhya Pradesh, DN, Delhi, Jharkhand, Maharashtra, and Lakshadweep",
     ),
   ];
 
@@ -1266,7 +1268,7 @@ class may extends StatelessWidget {
       date: "10 May 2024, Friday",
       holiday: "Maharshi Parasuram Jayanti",
       states:
-      "Haryana, Gujarat, Himachal Pradesh, Madhya Pradesh, and Rajasthan",
+          "Haryana, Gujarat, Himachal Pradesh, Madhya Pradesh, and Rajasthan",
     ),
     Holiday(
       date: "10 May 2024, Friday",
@@ -1282,7 +1284,7 @@ class may extends StatelessWidget {
       date: "23 May 2024, Thursday",
       holiday: "Buddha Purnima",
       states:
-      "Uttar Pradesh, Mizoram, Haryana, Jharkhand, Madhya Pradesh, Delhi, Maharashtra, Tripura, Himachal Pradesh, Arunachal Pradesh, Chandigarh, Andaman and Nicobar Islands, West Bengal, and Uttarakhand",
+          "Uttar Pradesh, Mizoram, Haryana, Jharkhand, Madhya Pradesh, Delhi, Maharashtra, Tripura, Himachal Pradesh, Arunachal Pradesh, Chandigarh, Andaman and Nicobar Islands, West Bengal, and Uttarakhand",
     ),
     Holiday(
       date: "24 May 2024, Friday",
@@ -1361,7 +1363,7 @@ class june extends StatelessWidget {
       date: "16 June 2024, Sunday",
       holiday: "Bakrid / Eid al Adha",
       states:
-      "Chandigarh, West Bengal, Telangana, Karnataka, Nagaland, Uttarakhand, Assam, Jharkhand, Gujarat, Arunachal Pradesh, Mizoram, Manipur, Delhi, Madhya Pradesh, Haryana, Bihar, Himachal Pradesh, Kerala, Goa, Punjab, Odisha, Rajasthan, Jammu & Kashmir, Andaman and Nicobar Islands, Lakshadweep, Tamil Nadu, Meghalaya, Uttar Pradesh, Tripura, and Andhra Pradesh",
+          "Chandigarh, West Bengal, Telangana, Karnataka, Nagaland, Uttarakhand, Assam, Jharkhand, Gujarat, Arunachal Pradesh, Mizoram, Manipur, Delhi, Madhya Pradesh, Haryana, Bihar, Himachal Pradesh, Kerala, Goa, Punjab, Odisha, Rajasthan, Jammu & Kashmir, Andaman and Nicobar Islands, Lakshadweep, Tamil Nadu, Meghalaya, Uttar Pradesh, Tripura, and Andhra Pradesh",
     ),
     Holiday(
       date: "30 June 2024, Sunday",
@@ -1450,7 +1452,7 @@ class july extends StatelessWidget {
       date: "17 July 2024, Wednesday",
       holiday: "Muharram",
       states:
-      "Lakshadweep, Odisha, Delhi, Gujarat, Bihar, Haryana, Jharkhand, Rajasthan, Himachal Pradesh, Jammu & Kashmir, Karnataka, Madhya Pradesh, Chandigarh, Andhra Pradesh, Telangana, Uttar Pradesh, Chhattisgarh, Maharashtra, Tamil Nadu, Andaman and Nicobar, and Tripura",
+          "Lakshadweep, Odisha, Delhi, Gujarat, Bihar, Haryana, Jharkhand, Rajasthan, Himachal Pradesh, Jammu & Kashmir, Karnataka, Madhya Pradesh, Chandigarh, Andhra Pradesh, Telangana, Uttar Pradesh, Chhattisgarh, Maharashtra, Tamil Nadu, Andaman and Nicobar, and Tripura",
     ),
     Holiday(
       date: "31 July 2024, Wednesday",
@@ -1534,13 +1536,13 @@ class augest extends StatelessWidget {
       date: "19 Aug 2024, Monday",
       holiday: "Raksha Bandhan",
       states:
-      "Uttar Pradesh, Haryana, Rajasthan, Gujarat, Madhya Pradesh, Chandigarh, Daman and Diu, Uttarakhand",
+          "Uttar Pradesh, Haryana, Rajasthan, Gujarat, Madhya Pradesh, Chandigarh, Daman and Diu, Uttarakhand",
     ),
     Holiday(
       date: "26 Aug 2024, Monday",
       holiday: "Janmashtami",
       states:
-      "Bihar, Himachal Pradesh, Tamil Nadu, Telangana, Punjab, Jammu & Kashmir, Daman and Diu, Haryana, Jharkhand, Sikkim, Rajasthan, Gujarat, Uttarakhand, Chandigarh, Uttar Pradesh, Delhi, Meghalaya, Odisha, Chhattisgarh, Madhya Pradesh, Nagaland, Andhra Pradesh, Tripura, Andaman and Nicobar and Himachal Pradesh",
+          "Bihar, Himachal Pradesh, Tamil Nadu, Telangana, Punjab, Jammu & Kashmir, Daman and Diu, Haryana, Jharkhand, Sikkim, Rajasthan, Gujarat, Uttarakhand, Chandigarh, Uttar Pradesh, Delhi, Meghalaya, Odisha, Chhattisgarh, Madhya Pradesh, Nagaland, Andhra Pradesh, Tripura, Andaman and Nicobar and Himachal Pradesh",
     ),
   ];
 
@@ -1594,7 +1596,7 @@ class september extends StatelessWidget {
       date: "7 Sep 2024, Saturday",
       holiday: "Ganesh Chaturthi",
       states:
-      "Telangana, Maharashtra, Daman and Diu, Dadra and Nagar Haveli, Gujarat, Andhra Pradesh, Karnataka, Odisha, Puducherry, Goa, and Tamil Nadu",
+          "Telangana, Maharashtra, Daman and Diu, Dadra and Nagar Haveli, Gujarat, Andhra Pradesh, Karnataka, Odisha, Puducherry, Goa, and Tamil Nadu",
     ),
     Holiday(
       date: "13 Sep 2024, Friday",
@@ -1713,7 +1715,7 @@ class october extends StatelessWidget {
       date: "12 Oct 2024, Saturday",
       holiday: "Vijaya Dashami",
       states:
-      "Uttar Pradesh, Daman and Diu, West Bengal, Chhattisgarh, Telangana, Himachal Pradesh, Arunachal Pradesh, Delhi, Andaman and Nicobar, Gujarat, Odisha, Nagaland, Andhra Pradesh, Punjab, Goa, Rajasthan, Meghalaya, Madhya Pradesh, Tamil Nadu, Jharkhand, Haryana, Uttarakhand, Tripura, Bihar, Jammu & Kashmir, Assam, Sikkim, and Chandigarh",
+          "Uttar Pradesh, Daman and Diu, West Bengal, Chhattisgarh, Telangana, Himachal Pradesh, Arunachal Pradesh, Delhi, Andaman and Nicobar, Gujarat, Odisha, Nagaland, Andhra Pradesh, Punjab, Goa, Rajasthan, Meghalaya, Madhya Pradesh, Tamil Nadu, Jharkhand, Haryana, Uttarakhand, Tripura, Bihar, Jammu & Kashmir, Assam, Sikkim, and Chandigarh",
     ),
     Holiday(
       date: "16 Oct 2024, Wednesday",
@@ -1724,13 +1726,13 @@ class october extends StatelessWidget {
       date: "17 Oct 2024, Thursday",
       holiday: "Maharishi Valmiki Jayanti",
       states:
-      "Karnataka, Haryana, Madhya Pradesh, Himachal Pradesh,  Chattisgarh, and Punjab",
+          "Karnataka, Haryana, Madhya Pradesh, Himachal Pradesh,  Chattisgarh, and Punjab",
     ),
     Holiday(
       date: "31 Oct 2024, Thursday",
       holiday: "Deepavali Holiday",
       states:
-      "Karnataka, Daman and Diu, Haryana, Rajasthan, Uttarakhand, Maharashtra, and Uttar Pradesh",
+          "Karnataka, Daman and Diu, Haryana, Rajasthan, Uttarakhand, Maharashtra, and Uttar Pradesh",
     ),
     Holiday(
       date: "31 Oct 2024, Thursday",
@@ -1798,7 +1800,7 @@ class november extends StatelessWidget {
       date: "1 Nov 2024, Friday",
       holiday: "Diwali",
       states:
-      "Odisha, Manipur, Dadra and Nagar Haveli, Daman and Diu, Bihar, Telangana, Mizoram, Meghalaya, Tripura, Sikkim, Assam, Arunachal Pradesh, Uttarakhand, West Bengal, Nagaland, Madhya Pradesh, Rajasthan, Punjab, Gujarat, Jammu & Kashmir, Haryana, Jharkhand, Himachal Pradesh, Chandigarh, Andaman and Nicobar, and Uttar Pradesh",
+          "Odisha, Manipur, Dadra and Nagar Haveli, Daman and Diu, Bihar, Telangana, Mizoram, Meghalaya, Tripura, Sikkim, Assam, Arunachal Pradesh, Uttarakhand, West Bengal, Nagaland, Madhya Pradesh, Rajasthan, Punjab, Gujarat, Jammu & Kashmir, Haryana, Jharkhand, Himachal Pradesh, Chandigarh, Andaman and Nicobar, and Uttar Pradesh",
     ),
     Holiday(
       date: "2 Nov 2024, Saturday",
@@ -1829,7 +1831,7 @@ class november extends StatelessWidget {
       date: "15 Nov 2024, Friday",
       holiday: "Guru Nanak Jayanti",
       states:
-      "Assam, Jharkhand, Uttarakhand, Gujarat, Himachal Pradesh, Chhattisgarh, Telangana, Madhya Pradesh, Delhi, Jammu & Kashmir, Chandigarh, Haryana, Punjab, Arunachal Pradesh, West Bengal, Uttar Pradesh, Rajasthan, Nagaland, Andaman and Nicobar",
+          "Assam, Jharkhand, Uttarakhand, Gujarat, Himachal Pradesh, Chhattisgarh, Telangana, Madhya Pradesh, Delhi, Jammu & Kashmir, Chandigarh, Haryana, Punjab, Arunachal Pradesh, West Bengal, Uttar Pradesh, Rajasthan, Nagaland, Andaman and Nicobar",
     ),
     Holiday(
       date: "18 Nov 2024, Monday",
