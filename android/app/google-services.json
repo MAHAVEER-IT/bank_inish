@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "372273471373",
+    "project_id": "bank-ed2c6",
+    "storage_bucket": "bank-ed2c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372273471373:android:ac3ded22909b68eccc67c4",
+        "android_client_info": {
+          "package_name": "com.example.bank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsp3dh_R3GtplfJTD84dqqpKnpQWm3Aw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
