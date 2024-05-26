@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'expance.dart';
+
 class GridItem {
   final String imagePath;
   final String buttonText;
@@ -100,6 +102,19 @@ class union extends StatelessWidget {
             _launchDialer('1800 22 2244');
           },
           iconData: Icons.phone,
+        ),
+        GridItem(
+          imagePath: 'images/expance.png',
+          buttonText: 'Add Expanse',
+          onPressed: (context) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExpenseTrackerHomePage(),
+              ),
+            );
+          },
+          iconData: Icons.add,
         )
       ],
     );

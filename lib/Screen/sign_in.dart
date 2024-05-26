@@ -1,5 +1,5 @@
 import 'package:bank/Utils/colors.dart';
-import 'package:bank/first.dart';
+import 'package:bank/main.dart';
 import 'package:flutter/material.dart';
 
 import 'spash_screen.dart';
@@ -90,7 +90,7 @@ class SignIn extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => first(),
+                              builder: (context) => App(),
                             ),
                           );
                         }
