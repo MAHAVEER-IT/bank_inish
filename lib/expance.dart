@@ -135,13 +135,26 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Tracker'),
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+            'Add Your Expense',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Image.asset(
+            'images/expance.png',
+            scale: 15,
+          )
+        ]),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () => _startAddNewExpense(context),
           ),
         ],
+        backgroundColor: Colors.grey[300],
       ),
       body: _expenses.isEmpty
           ? Center(
@@ -187,7 +200,7 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
         child: Icon(Icons.add),
         onPressed: () => _startAddNewExpense(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
