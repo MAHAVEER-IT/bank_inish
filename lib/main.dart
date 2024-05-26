@@ -65,7 +65,7 @@ class _AppState extends State<App> {
             colors: [
               backgroundColor2,
               backgroundColor2,
-              Colors.yellowAccent.shade100,
+              Colors.amber.shade100,
             ],
           ),
         ),
