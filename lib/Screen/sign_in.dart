@@ -10,11 +10,6 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController _usernameController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -28,153 +23,140 @@ class SignIn extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: ListView(
-            children: [
-              SizedBox(height: size.height * 0.03),
-              Text(
-                "Hello Again!",
+            child: ListView(
+          children: [
+            SizedBox(height: size.height * 0.03),
+            Text(
+              "Hello Again!",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 37,
+                color: textColor1,
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              "Wellcome back!",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 27, color: textColor2, height: 1.2),
+            ),
+            SizedBox(height: size.height * 0.04),
+            // for username and password
+            myTextField("Enter username", Colors.white),
+            myTextField("Password", Colors.black26),
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Recovery Password               ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 37,
-                  color: textColor1,
+                  fontSize: 16,
+                  color: textColor2,
                 ),
               ),
-              const SizedBox(height: 15),
-              Text(
-                "Welcome back!",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 27, color: textColor2, height: 1.2),
-              ),
-              SizedBox(height: size.height * 0.04),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    myTextField(
-                        "Enter username", Colors.white, _usernameController),
-                    myTextField("Password", Colors.black26, _passwordController,
-                        isPassword: true),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Recovery Password               ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: textColor2,
+            ),
+            SizedBox(height: size.height * 0.04),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                  // for sign in button
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonColor,
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => App()));
+                      // Define the action when the button is pressed
+                    },
+                    child: const Center(
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: size.height * 0.04),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    // Sign in button
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttonColor,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                  SizedBox(height: size.height * 0.06),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 2,
+                        width: size.width * 0.2,
+                        color: Colors.black12,
+                      ),
+                      Text(
+                        "  Or continue with   ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: textColor2,
+                          fontSize: 16,
                         ),
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => App(),
+                      Container(
+                        height: 2,
+                        width: size.width * 0.2,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.06),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      socialIcon("images/google.png"),
+                      socialIcon("images/apple.png"),
+                      socialIcon("images/facebook.png"),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.07),
+                  TextButton(
+                    onPressed: () {
+                      // Add your onPressed logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Register(),
+                        ),
+                      );
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Not a member? ',
+                        style: TextStyle(
+                          color: textColor2,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Register now',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        }
-                      },
-                      child: const Center(
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: size.height * 0.06),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 2,
-                          width: size.width * 0.2,
-                          color: Colors.black12,
-                        ),
-                        Text(
-                          "  Or continue with   ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: textColor2,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Container(
-                          height: 2,
-                          width: size.width * 0.2,
-                          color: Colors.black12,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.06),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        socialIcon("images/google.png"),
-                        socialIcon("images/apple.png"),
-                        socialIcon("images/facebook.png"),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.07),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Register(),
-                          ),
-                        );
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Not a member? ',
-                          style: TextStyle(
-                            color: textColor2,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Register now',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          ],
+        )),
       ),
     );
   }
@@ -199,46 +181,33 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  Container myTextField(
-      String hint, Color color, TextEditingController controller,
-      {bool isPassword = false}) {
+  Container myTextField(String hint, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 25,
         vertical: 10,
       ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: isPassword,
+      child: TextField(
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 22,
-          ),
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          hintText: hint,
-          hintStyle: const TextStyle(
-            color: Colors.black45,
-            fontSize: 19,
-          ),
-          suffixIcon: isPassword
-              ? Icon(
-                  Icons.visibility_off_outlined,
-                  color: color,
-                )
-              : null,
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter $hint';
-          }
-          return null;
-        },
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 22,
+            ),
+            fillColor: Colors.white,
+            filled: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            hintText: hint,
+            hintStyle: const TextStyle(
+              color: Colors.black45,
+              fontSize: 19,
+            ),
+            suffixIcon: Icon(
+              Icons.visibility_off_outlined,
+              color: color,
+            )),
       ),
     );
   }

@@ -40,9 +40,9 @@ class ExpenseTrackerHomePage extends StatefulWidget {
 
 class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
   List<Map<String, dynamic>> _expenses = [];
+  String _selectedType = 'Outgoing';
 
   final _amountController = TextEditingController();
-  final _reasonController = TextEditingController();
 
   @override
   void initState() {
@@ -52,15 +52,14 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
 
   void _addExpense() {
     final enteredAmount = double.tryParse(_amountController.text);
-    final enteredReason = _reasonController.text;
 
-    if (enteredAmount == null || enteredReason.isEmpty) {
+    if (enteredAmount == null) {
       return;
     }
 
     final newExpense = {
       'amount': enteredAmount,
-      'reason': enteredReason,
+      'type': _selectedType,
       'date': DateTime.now().toString(),
     };
 
@@ -71,7 +70,6 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
     _saveExpenses();
 
     _amountController.clear();
-    _reasonController.clear();
     Navigator.of(context).pop();
   }
 
@@ -91,9 +89,20 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                 ),
-                TextField(
-                  decoration: InputDecoration(labelText: 'Reason'),
-                  controller: _reasonController,
+                DropdownButton<String>(
+                  value: _selectedType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedType = newValue!;
+                    });
+                  },
+                  items: <String>['Income', 'Outgoing']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
@@ -172,15 +181,23 @@ class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePage> {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
+                      backgroundColor: _expenses[index]['type'] == 'Income'
+                          ? Colors.green
+                          : Colors.red,
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: FittedBox(
-                          child: Text('\₹${_expenses[index]['amount']}'),
+                          child: Text(
+                            '₹${_expenses[index]['amount']}',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     title: Text(
-                      _expenses[index]['reason'],
+                      _expenses[index]['type'],
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     subtitle: Text(
