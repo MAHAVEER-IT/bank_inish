@@ -1,11 +1,21 @@
+import 'package:bank/Screen/spash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bank/Utils/colors.dart';
 import 'package:bank/main.dart';
 import 'package:flutter/material.dart';
 
-import 'spash_screen.dart';
-
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
+
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String _email = '';
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,145 +33,138 @@ class SignIn extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-            child: ListView(
-          children: [
-            SizedBox(height: size.height * 0.03),
-            Text(
-              "Hello Again!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 37,
-                color: textColor1,
-              ),
-            ),
-            const SizedBox(height: 15),
-            Text(
-              "Wellcome back!",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 27, color: textColor2, height: 1.2),
-            ),
-            SizedBox(height: size.height * 0.04),
-            // for username and password
-            myTextField("Enter username", Colors.white),
-            myTextField("Password", Colors.black26),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Recovery Password               ",
+          child: ListView(
+            children: [
+              SizedBox(height: size.height * 0.03),
+              Text(
+                "Hello Again!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: textColor2,
+                  fontSize: 37,
+                  color: textColor1,
                 ),
               ),
-            ),
-            SizedBox(height: size.height * 0.04),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                children: [
-                  // for sign in button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => App()));
-                      // Define the action when the button is pressed
-                    },
-                    child: const Center(
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.06),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              const SizedBox(height: 15),
+              Text(
+                "Welcome back!",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 27, color: textColor2, height: 1.2),
+              ),
+              SizedBox(height: size.height * 0.04),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
                     children: [
-                      Container(
-                        height: 2,
-                        width: size.width * 0.2,
-                        color: Colors.black12,
-                      ),
-                      Text(
-                        "  Or continue with   ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: textColor2,
-                          fontSize: 16,
+                      myTextField("Enter email", Colors.white, (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        _email = value;
+                        return null;
+                      }),
+                      myTextField("Password", Colors.black26, (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        _password = value;
+                        return null;
+                      }, obscureText: true),
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Recovery Password               ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: textColor2,
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 2,
-                        width: size.width * 0.2,
-                        color: Colors.black12,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.06),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      socialIcon("images/google.png"),
-                      socialIcon("images/apple.png"),
-                      socialIcon("images/facebook.png"),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.07),
-                  TextButton(
-                    onPressed: () {
-                      // Add your onPressed logic here
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Register(),
+                      SizedBox(height: size.height * 0.04),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: buttonColor,
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                         ),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Not a member? ',
-                        style: TextStyle(
-                          color: textColor2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Register now',
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              await _auth.signInWithEmailAndPassword(
+                                  email: _email, password: _password);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => App()));
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'user-not-found') {
+                                showErrorDialog(
+                                    context, 'No user found for that email.');
+                              } else if (e.code == 'wrong-password') {
+                                showErrorDialog(context,
+                                    'Wrong password provided for that user.');
+                              }
+                            }
+                          }
+                        },
+                        child: const Center(
+                          child: Text(
+                            "Sign In",
                             style: TextStyle(
-                              color: Colors.blue,
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Register(),
+                              ),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: textColor2,
+                            textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          child: Text(
+                            "Not a member ? Register",
+                            style: TextStyle(color: Colors.lightBlue),
+                          ),
+                        ),
+                      ),
+                      // The rest of your code for social login and register
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
-        )),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Container socialIcon(image) {
+  Container socialIcon(String image) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 32,
@@ -181,34 +184,59 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  Container myTextField(String hint, Color color) {
+  Widget myTextField(
+      String hint, Color color, FormFieldValidator<String>? validator,
+      {bool obscureText = false}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 25,
         vertical: 10,
       ),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 22,
-            ),
-            fillColor: Colors.white,
-            filled: true,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            hintText: hint,
-            hintStyle: const TextStyle(
-              color: Colors.black45,
-              fontSize: 19,
-            ),
-            suffixIcon: Icon(
-              Icons.visibility_off_outlined,
-              color: color,
-            )),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 22,
+          ),
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          hintText: hint,
+          hintStyle: const TextStyle(
+            color: Colors.black45,
+            fontSize: 19,
+          ),
+          suffixIcon: Icon(
+            Icons.visibility_off_outlined,
+            color: color,
+          ),
+        ),
+        obscureText: obscureText,
+        validator: validator,
       ),
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

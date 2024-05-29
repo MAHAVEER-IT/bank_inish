@@ -1,13 +1,16 @@
-import 'package:bank/Screen/spash_screen.dart';
 import 'package:bank/Utils/colors.dart';
+import 'package:bank/login.dart';
 import 'package:bank/sbi.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'indian.dart';
 import 'kvb.dart';
 import 'union.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Urbanist',
       ),
-      home: MySplashScreen(),
+      home: Login(),
     );
   }
 }
@@ -64,7 +67,7 @@ class _AppState extends State<App> {
             begin: Alignment.topCenter,
             colors: [
               backgroundColor2,
-              backgroundColor2,
+              Colors.deepOrange.shade100,
               Colors.amber.shade100,
             ],
           ),

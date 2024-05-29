@@ -1,168 +1,26 @@
 import 'package:bank/Screen/sign_in.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bank/Utils/colors.dart';
 import 'package:bank/main.dart';
-import 'package:flutter/material.dart';
 
-class MySplashScreen extends StatelessWidget {
-  const MySplashScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        color: backgroundColor1,
-        height: size.height,
-        width: size.width,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: size.height * 0.5,
-                width: size.width,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
-                  color: Colors.deepOrangeAccent,
-                  image: const DecorationImage(
-                    image: AssetImage(
-                      "images/image.png",
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: size.height * 0.53,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      "Unlock Your Financial\nPotential Today!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: textColor1,
-                          height: 1.2),
-                    ),
-                    const SizedBox(height: 25),
-                    Text(
-                      "Welcome to our banking app \n where your financial goals become reality",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: textColor2,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.07),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                      ),
-                      child: Container(
-                        height: size.height * 0.08,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: backgroundColor3.withOpacity(0.9),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12.withOpacity(0.05),
-                              spreadRadius: 1,
-                              blurRadius: 7,
-                              offset: const Offset(0, -1),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: Row(
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding: EdgeInsets
-                                      .zero, // Remove default padding to control size exactly
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  minimumSize: Size(
-                                      size.width / 2.2,
-                                      size.height *
-                                          0.08), // Set the size of the button
-                                ),
-                                onPressed: () {
-                                  print("Clicked");
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Register()));
-                                  // Define the action when the button is pressed
-                                },
-                                child: Center(
-                                  child: Text(
-                                    "Register",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: textColor1,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignIn(),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  "Sign In",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: textColor1,
-                                  ),
-                                ),
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String _email = '';
+  String _password = '';
+  String _username = '';
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final _formKey = GlobalKey<FormState>();
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -205,11 +63,27 @@ class Register extends StatelessWidget {
                   key: _formKey,
                   child: Column(
                     children: [
-                      // Username, email, and password fields
-                      myTextField("Enter username", Colors.white),
-                      myTextField("Enter email", Colors.white),
-                      myTextField("Password", Colors.black26,
-                          obscureText: true),
+                      myTextField("Enter username", Colors.white, (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your username';
+                        }
+                        _username = value;
+                        return null;
+                      }),
+                      myTextField("Enter email", Colors.white, (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        _email = value;
+                        return null;
+                      }),
+                      myTextField("Password", Colors.black26, (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        _password = value;
+                        return null;
+                      }, obscureText: true),
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
@@ -221,7 +95,6 @@ class Register extends StatelessWidget {
                                 builder: (context) => SignIn(),
                               ),
                             );
-                            // Your onPressed function here
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: textColor2,
@@ -236,9 +109,7 @@ class Register extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       SizedBox(height: size.height * 0.04),
-                      // Register button
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: buttonColor,
@@ -247,15 +118,23 @@ class Register extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // Process data if form is valid
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => App(),
-                              ),
-                            );
+                            try {
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: _email, password: _password);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => App()));
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'email-already-in-use') {
+                                showErrorDialog(context,
+                                    'The account already exists for that email.');
+                              } else {
+                                showErrorDialog(context, e.message!);
+                              }
+                            }
                           }
                         },
                         child: const Center(
@@ -269,39 +148,7 @@ class Register extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: size.height * 0.06),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 2,
-                            width: size.width * 0.2,
-                            color: Colors.black12,
-                          ),
-                          Text(
-                            "  Or continue with   ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: textColor2,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Container(
-                            height: 2,
-                            width: size.width * 0.2,
-                            color: Colors.black12,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.06),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          socialIcon("images/google.png"),
-                          socialIcon("images/apple.png"),
-                          socialIcon("images/facebook.png"),
-                        ],
-                      ),
+                      // The rest of your code for social login
                     ],
                   ),
                 ),
@@ -313,27 +160,8 @@ class Register extends StatelessWidget {
     );
   }
 
-  Container socialIcon(String image) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32,
-        vertical: 15,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white,
-          width: 2,
-        ),
-      ),
-      child: Image.asset(
-        image,
-        height: 35,
-      ),
-    );
-  }
-
-  Widget myTextField(String hint, Color color, {bool obscureText = false}) {
+  Widget myTextField(String hint, Color color, FormFieldValidator<String>? validator,
+      {bool obscureText = false}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 25,
@@ -362,13 +190,28 @@ class Register extends StatelessWidget {
           ),
         ),
         obscureText: obscureText,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter $hint';
-          }
-          return null;
-        },
+        validator: validator,
       ),
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

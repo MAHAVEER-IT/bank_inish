@@ -932,7 +932,7 @@ class HolidayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - January 2024'),
+        title: Text('State Bank holiday - January 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1000,7 +1000,7 @@ class feb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - February 2024'),
+        title: Text('State Bank holiday - February 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1084,7 +1084,7 @@ class march extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - March 2024'),
+        title: Text('State Bank holiday - March 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1226,7 +1226,7 @@ class april extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - April 2024'),
+        title: Text('State Bank holiday - April 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1311,7 +1311,7 @@ class may extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - May 2024'),
+        title: Text('State Bank holiday - May 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1390,7 +1390,7 @@ class june extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - JULY 2024'),
+        title: Text('State Bank holiday - JULY 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1479,7 +1479,7 @@ class july extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - JULY 2024'),
+        title: Text('State Bank holiday - JULY 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1564,7 +1564,7 @@ class augest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - AUGUST 2024'),
+        title: Text('State Bank holiday - AUGUST 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1663,7 +1663,7 @@ class september extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - SEPTEMBER 2024'),
+        title: Text('State Bank holiday - SEPTEMBER 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1758,7 +1758,7 @@ class october extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - OCTOBER 2024'),
+        title: Text('State Bank holiday - OCTOBER 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1868,7 +1868,7 @@ class november extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - NOVEMBER 2024'),
+        title: Text('State Bank holiday - NOVEMBER 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -1971,7 +1971,7 @@ class december extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - DECEMER 2024'),
+        title: Text('State Bank holiday - DECEMER 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
@@ -2008,7 +2008,7 @@ class week extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UNION Bank holiday - WEEEK-END 2024'),
+        title: Text('State Bank holiday - WEEEK-END 2024'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: SingleChildScrollView(
