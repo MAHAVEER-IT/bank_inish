@@ -30,7 +30,7 @@ class kvb extends StatelessWidget {
     gridItems.addAll(
       [
         GridItem(
-          imagePath: 'images/balance.jpg',
+          imagePath: 'images/balance.png',
           buttonText: 'Balance Check',
           onPressed: (content) {
             _launchDialer('09223766666');
@@ -46,7 +46,7 @@ class kvb extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/blockatm.jpg',
+          imagePath: 'images/blockatm.png',
           buttonText: 'Block ATM',
           onPressed: (context) {
             _launchDialer('1800 112 211');
@@ -54,7 +54,7 @@ class kvb extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.jpg',
+          imagePath: 'images/nearbylocation.png',
           buttonText: 'Near KVB ATM',
           onPressed: (context) {
             _launchGoogleMaps(
@@ -64,7 +64,7 @@ class kvb extends StatelessWidget {
           iconData: Icons.location_pin,
         ),
         GridItem(
-          imagePath: 'images/calculator.jpg',
+          imagePath: 'images/calculator.png',
           buttonText: 'Calculator',
           onPressed: (context) {
             Navigator.push(
@@ -77,7 +77,7 @@ class kvb extends StatelessWidget {
           iconData: Icons.calculate,
         ),
         GridItem(
-          imagePath: 'images/holiday.jpg',
+          imagePath: 'images/holiday.png',
           buttonText: 'Holiday Check',
           onPressed: (context) {
             Navigator.push(
@@ -150,7 +150,7 @@ class kvb extends StatelessWidget {
         ),
         backgroundColor: Colors.lime,
       ),
-      backgroundColor: Colors.lime[100],
+      backgroundColor: const Color.fromARGB(255, 234, 237, 211),
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -197,7 +197,7 @@ class kvb extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.green[400],
+                            backgroundColor: const Color.fromARGB(255, 13, 13, 13),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

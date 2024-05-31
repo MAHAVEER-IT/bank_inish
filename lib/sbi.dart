@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +33,7 @@ class Sbi extends StatelessWidget {
     gridItems.addAll(
       [
         GridItem(
-          imagePath: 'images/balance.jpg',
+          imagePath: 'images/balance.png',
           buttonText: 'Balance Check',
           onPressed: (context) async {
             await _launchDialer('09223766666');
@@ -47,7 +49,7 @@ class Sbi extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/blockatm.jpg',
+          imagePath: 'images/blockatm.png',
           buttonText: 'Block ATM',
           onPressed: (context) async {
             await _launchDialer('1800112211');
@@ -55,7 +57,7 @@ class Sbi extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.jpg',
+          imagePath: 'images/nearbylocation.png',
           buttonText: 'Near SBI ATM',
           onPressed: (context) async {
             await _launchGoogleMaps(query: 'near+sbi+atm');
@@ -63,20 +65,20 @@ class Sbi extends StatelessWidget {
           iconData: Icons.location_pin,
         ),
         GridItem(
-          imagePath: 'images/calculator.jpg',
+          imagePath: 'images/calculator.png',
           buttonText: 'Calculator',
           onPressed: (context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BankInterestCalculator(),
+                builder: (context) => LoanCalculator(),
               ),
             );
           },
           iconData: Icons.calculate,
         ),
         GridItem(
-          imagePath: 'images/holiday.jpg',
+          imagePath: 'images/holiday.png',
           buttonText: 'Holiday Check',
           onPressed: (context) {
             Navigator.push(
@@ -147,7 +149,7 @@ class Sbi extends StatelessWidget {
         ),
         backgroundColor: Colors.lightBlue[100],
       ),
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: const Color.fromARGB(255, 217, 234, 242),
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -194,7 +196,7 @@ class Sbi extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.indigo,
+                            backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -2128,92 +2130,156 @@ class week extends StatelessWidget {
   }
 }
 
-class BankInterestCalculator extends StatefulWidget {
+class LoanCalculator extends StatefulWidget {
   @override
-  _BankInterestCalculatorState createState() => _BankInterestCalculatorState();
+  _LoanCalculatorState createState() => _LoanCalculatorState();
 }
 
-class _BankInterestCalculatorState extends State<BankInterestCalculator> {
-  double principal = 0.0;
-  double rate = 0.0;
-  int years = 0;
-  double interest = 0.0;
-  double totalAmount = 0.0;
+class _LoanCalculatorState extends State<LoanCalculator> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _yearsController = TextEditingController();
 
-  void calculateInterest() {
-    setState(() {
-      interest = (principal * rate * years) / 100;
-      totalAmount = principal + interest;
-    });
+  double _interestRate = 0.0;
+  double _emi = 0.0;
+
+  // List of schemes for the dropdown menu
+  final List<String> _schemes = [
+    'Xpress Credit - Defence/Police',
+    'Xpress Credit - Govt./CPSEs',
+    'Xpress Credit - Other Corporates',
+    'Xpress Elite - SBI Salary Account',
+    'Xpress Elite - Other Bank Salary Account',
+    'Xpress Flexi',
+    'Xpress Lite',
+    'Quick Personal Loan',
+    'Xpress Credit Insta Top-Up',
+    'Pre-Approved Personal Loans',
+    'Pension Loan Schemes',
+  ];
+
+  // Interest rates map based on schemes
+  final Map<String, List<double>> _interestRates = {
+    'Xpress Credit - Defence/Police': [11.15, 12.65],
+    'Xpress Credit - Govt./CPSEs': [11.30, 13.80],
+    'Xpress Credit - Other Corporates': [12.30, 14.30],
+    'Xpress Elite - SBI Salary Account': [11.15, 11.65],
+    'Xpress Elite - Other Bank Salary Account': [11.40, 11.90],
+    'Xpress Flexi': [
+      11.40,
+      13.80
+    ], // Increment by 0.25% or 0.25% for Flexi based on the original scheme
+    'Xpress Lite': [
+      12.15,
+      14.80
+    ], // Increment by 1% for Lite based on the original scheme
+    'Quick Personal Loan': [
+      11.40,
+      14.80
+    ], // Increment by 0.25% for Quick Loan based on the original scheme
+    'Xpress Credit Insta Top-Up': [12.40, 12.40],
+    'Pre-Approved Personal Loans': [13.80, 14.30],
+    'Pension Loan Schemes': [11.30, 11.80],
+  };
+
+  String _selectedScheme = 'Xpress Credit - Defence/Police';
+
+  // Calculate EMI function
+  void _calculateEMI() {
+    if (_formKey.currentState!.validate()) {
+      double principal = double.parse(_amountController.text);
+      int years = int.parse(_yearsController.text);
+      double annualInterestRate = _interestRates[_selectedScheme]![0];
+      double monthlyInterestRate = annualInterestRate / 12 / 100;
+      int totalMonths = years * 12;
+
+      double emi = principal *
+          monthlyInterestRate *
+          (pow(1 + monthlyInterestRate, totalMonths) /
+              (pow(1 + monthlyInterestRate, totalMonths) - 1));
+
+      setState(() {
+        _emi = emi;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+            child: Text(
+          'SBI Loan Interest Calculator',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
+        backgroundColor: Colors.lightBlue.shade100,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
             children: [
-              Text(
-                'Bank Interest Calculator',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(
+                height: 10 * 10,
+              ),
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'Select Loan Scheme'),
+                value: _selectedScheme,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedScheme = newValue!;
+                  });
+                },
+                items: _schemes.map((String scheme) {
+                  return DropdownMenuItem<String>(
+                    value: scheme,
+                    child: Text(scheme),
+                  );
+                }).toList(),
               ),
               SizedBox(
-                height: 30,
-                width: 30,
-                child: Icon(Icons.calculate_outlined),
+                height: 20,
               ),
-            ],
-          ),
-          backgroundColor: Colors.lightBlue[100],
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'Principal'),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Loan Amount'),
                 keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    principal = double.parse(value);
-                  });
+                controller: _amountController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter loan amount';
+                  }
+                  return null;
                 },
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Interest Rate (%)'),
+              SizedBox(height: 20,),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Loan Tenure (Years)'),
                 keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    rate = double.parse(value);
-                  });
+                controller: _yearsController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter loan tenure';
+                  }
+                  return null;
                 },
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Years'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    years = int.parse(value);
-                  });
-                },
+              SizedBox(height: 20),
+              SizedBox(
+                height: 60,
+                width: 10,
+                child: ElevatedButton(
+                  onPressed: _calculateEMI,
+                  child: Text('Calculate EMI',style: TextStyle(fontWeight: FontWeight.bold),),
+                ),
               ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: calculateInterest,
-                child: Text('Calculate'),
-              ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 20),
               Text(
-                'Interest: $interest',
-                style: TextStyle(fontSize: 18),
-              ),
-              Text(
-                'Total Amount: $totalAmount',
-                style: TextStyle(fontSize: 18),
+                _emi == 0.0
+                    ? 'EMI will be displayed here'
+                    : 'Your EMI is: $_emi',
+                style: TextStyle(fontSize: 20),
               ),
             ],
           ),

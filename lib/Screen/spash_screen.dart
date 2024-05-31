@@ -1,8 +1,8 @@
 import 'package:bank/Screen/sign_in.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bank/Utils/colors.dart';
 import 'package:bank/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -122,12 +122,50 @@ class _RegisterState extends State<Register> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             try {
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: _email, password: _password);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => App()));
+                              UserCredential userCredential =
+                                  await _auth.createUserWithEmailAndPassword(
+                                email: _email,
+                                password: _password,
+                              );
+                              User? user = userCredential.user;
+                              await user?.updateDisplayName(_username);
+                              await user?.sendEmailVerification();
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Verify your email'),
+                                    content: Text(
+                                        'A verification link has been sent to your email. Please verify your email to continue.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                              // Poll for email verification status
+                              bool isEmailVerified = false;
+                              while (!isEmailVerified) {
+                                await Future.delayed(Duration(seconds: 3));
+                                await user?.reload();
+                                user = _auth.currentUser;
+                                isEmailVerified = user?.emailVerified ?? false;
+                              }
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => App(
+                                      username: user?.displayName ?? "User"),
+                                ),
+                              );
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'email-already-in-use') {
                                 showErrorDialog(context,
@@ -161,19 +199,15 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget myTextField(String hint, Color color, FormFieldValidator<String>? validator,
+  Widget myTextField(
+      String hint, Color color, FormFieldValidator<String>? validator,
       {bool obscureText = false}) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 10,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: TextFormField(
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 22,
-          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(
@@ -181,16 +215,12 @@ class _RegisterState extends State<Register> {
             borderRadius: BorderRadius.circular(15),
           ),
           hintText: hint,
-          hintStyle: const TextStyle(
-            color: Colors.black45,
-            fontSize: 19,
-          ),
+          hintStyle: const TextStyle(color: Colors.black45, fontSize: 19),
           suffixIcon: hint == "Password"
               ? IconButton(
                   icon: Icon(
-                    obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: color,
-                  ),
+                      obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: color),
                   onPressed: () {
                     setState(() {
                       _isPasswordVisible = !_isPasswordVisible;

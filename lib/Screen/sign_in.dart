@@ -1,8 +1,10 @@
 import 'package:bank/Screen/spash_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bank/Utils/colors.dart';
 import 'package:bank/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'Reset_Password.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -77,16 +79,32 @@ class _SignInState extends State<SignIn> {
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                          "Recovery Password               ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: textColor2,
+                        child: TextButton(
+                          onPressed: _isLoading
+                              ? null
+                              : () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ResetPasswordScreen(),
+                                    ),
+                                  );
+                                },
+                          style: TextButton.styleFrom(
+                            foregroundColor: textColor2,
+                            textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(color: Colors.lightBlue),
                           ),
                         ),
                       ),
+
                       SizedBox(height: size.height * 0.04),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -99,7 +117,8 @@ class _SignInState extends State<SignIn> {
                         onPressed: _isLoading ? null : _signIn,
                         child: _isLoading
                             ? CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               )
                             : const Center(
                                 child: Text(
@@ -177,16 +196,11 @@ class _SignInState extends State<SignIn> {
       String hint, Color color, FormFieldValidator<String>? validator,
       {bool obscureText = false}) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 10,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: TextFormField(
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 22,
-          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(
@@ -194,16 +208,12 @@ class _SignInState extends State<SignIn> {
             borderRadius: BorderRadius.circular(15),
           ),
           hintText: hint,
-          hintStyle: const TextStyle(
-            color: Colors.black45,
-            fontSize: 19,
-          ),
+          hintStyle: const TextStyle(color: Colors.black45, fontSize: 19),
           suffixIcon: hint == "Password"
               ? IconButton(
                   icon: Icon(
-                    obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: color,
-                  ),
+                      obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: color),
                   onPressed: () {
                     setState(() {
                       _isPasswordVisible = !_isPasswordVisible;
@@ -225,17 +235,26 @@ class _SignInState extends State<SignIn> {
       });
 
       try {
-        await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+        User? user = userCredential.user;
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => App()),
+          MaterialPageRoute(
+            builder: (context) => App(username: user?.displayName ?? "User"),
+          ),
         );
       } on FirebaseAuthException catch (e) {
-        showErrorDialog(context, e.code == 'user-not-found'
-            ? 'No user found for that email.'
-            : e.code == 'wrong-password'
-                ? 'Wrong password provided for that user.'
-                : 'An error occurred. Please try again.');
+        showErrorDialog(
+            context,
+            e.code == 'user-not-found'
+                ? 'No user found for that email.'
+                : e.code == 'wrong-password'
+                    ? 'Wrong password provided for that user.'
+                    : 'An error occurred. Please try again.');
       } finally {
         setState(() {
           _isLoading = false;

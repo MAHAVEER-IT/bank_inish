@@ -30,7 +30,7 @@ class union extends StatelessWidget {
     gridItems.addAll(
       [
         GridItem(
-          imagePath: 'images/balance.jpg',
+          imagePath: 'images/balance.png',
           buttonText: 'Balance Check',
           onPressed: (content) {
             _launchDialer('9345713738');
@@ -46,7 +46,7 @@ class union extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/blockatm.jpg',
+          imagePath: 'images/blockatm.png',
           buttonText: 'Block ATM',
           onPressed: (context) {
             _launchDialer('1800 112 211');
@@ -54,7 +54,7 @@ class union extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.jpg',
+          imagePath: 'images/nearbylocation.png',
           buttonText: 'UNION ATM',
           onPressed: (context) {
             _launchGoogleMaps(
@@ -64,7 +64,7 @@ class union extends StatelessWidget {
           iconData: Icons.location_pin,
         ),
         GridItem(
-          imagePath: 'images/calculator.jpg',
+          imagePath: 'images/calculator.png',
           buttonText: 'Calculator',
           onPressed: (context) {
             Navigator.push(
@@ -77,7 +77,7 @@ class union extends StatelessWidget {
           iconData: Icons.calculate,
         ),
         GridItem(
-          imagePath: 'images/holiday.jpg',
+          imagePath: 'images/holiday.png',
           buttonText: 'Holiday Check',
           onPressed: (context) {
             Navigator.push(
@@ -150,7 +150,7 @@ class union extends StatelessWidget {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      backgroundColor: Colors.redAccent[100],
+      backgroundColor: const Color.fromARGB(255, 239, 222, 221),
       body: Padding(
         padding: const EdgeInsets.only(top: 35, left: 15, right: 15),
         child: GridView.builder(
@@ -197,7 +197,8 @@ class union extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.indigo,
+                            backgroundColor:
+                                const Color.fromARGB(255, 20, 20, 20),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -2169,7 +2170,7 @@ class _BankInterestCalculatorState extends State<BankInterestCalculator> {
               ),
             ],
           ),
-          backgroundColor: Colors.lightBlue[100],
+          backgroundColor: Colors.lime[100],
         ),
         body: Padding(
           padding: EdgeInsets.all(20.0),

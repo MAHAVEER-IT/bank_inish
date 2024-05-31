@@ -1,11 +1,11 @@
 import 'package:bank/Utils/colors.dart';
 import 'package:bank/login.dart';
-import '';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'indian.dart';
 import 'kvb.dart';
+import 'sbi.dart';
 import 'union.dart';
 
 void main() async {
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
 }
 
 class App extends StatefulWidget {
-  const App({Key? key});
+  final String username;
+  App({required this.username});
 
   @override
   State<App> createState() => _AppState();
@@ -43,6 +44,16 @@ class _AppState extends State<App> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              '${widget.username}!',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
             Text(
               'Select Your Bank',
               style: TextStyle(
@@ -67,8 +78,8 @@ class _AppState extends State<App> {
             begin: Alignment.topCenter,
             colors: [
               backgroundColor2,
-              Colors.deepOrange.shade100,
-              Colors.amber.shade100,
+              Color.fromARGB(255, 244, 221, 214),
+              const Color.fromARGB(255, 244, 238, 221),
             ],
           ),
         ),
@@ -229,7 +240,7 @@ class SBIPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: sbi(),
+      home: Sbi(),
     );
   }
 }

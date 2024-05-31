@@ -78,14 +78,13 @@ flutter:
     - images/sbi.png
     - images/kvb.png
     - images/union.png
-    - images/balance.jpg
-    - images/blockatm.jpg
-    - images/calculator.jpg
-    - images/holiday.jpg
+    - images/balance.png
+    - images/blockatm.png
+    - images/calculator.png
+    - images/holiday.png
     - images/mini.jpg
-    - images/nearbylocation.jpg
+    - images/nearbylocation.png
     - images/bank.png
-    - images/atm.png
     - images/banknear.png
     - images/custem.png
     - images/apple.png
