@@ -16,6 +16,8 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+  bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _SignInState extends State<SignIn> {
         child: SafeArea(
           child: ListView(
             children: [
-              SizedBox(height: size.height * 0.03),
+              SizedBox(height: size.height * 0.06),
               Text(
                 "Hello Again!",
                 textAlign: TextAlign.center,
@@ -71,7 +73,7 @@ class _SignInState extends State<SignIn> {
                         }
                         _password = value;
                         return null;
-                      }, obscureText: true),
+                      }, obscureText: !_isPasswordVisible),
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
@@ -94,36 +96,21 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              await _auth.signInWithEmailAndPassword(
-                                  email: _email, password: _password);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => App()));
-                            } on FirebaseAuthException catch (e) {
-                              if (e.code == 'user-not-found') {
-                                showErrorDialog(
-                                    context, 'No user found for that email.');
-                              } else if (e.code == 'wrong-password') {
-                                showErrorDialog(context,
-                                    'Wrong password provided for that user.');
-                              }
-                            }
-                          }
-                        },
-                        child: const Center(
-                          child: Text(
-                            "Sign In",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
+                        onPressed: _isLoading ? null : _signIn,
+                        child: _isLoading
+                            ? CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              )
+                            : const Center(
+                                child: Text(
+                                  "Sign In",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                              ),
                       ),
                       SizedBox(
                         height: 20,
@@ -131,14 +118,16 @@ class _SignInState extends State<SignIn> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Register(),
-                              ),
-                            );
-                          },
+                          onPressed: _isLoading
+                              ? null
+                              : () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Register(),
+                                    ),
+                                  );
+                                },
                           style: TextButton.styleFrom(
                             foregroundColor: textColor2,
                             textStyle: TextStyle(
@@ -147,7 +136,7 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                           child: Text(
-                            "Not a member ? Register",
+                            "Not a member? Register",
                             style: TextStyle(color: Colors.lightBlue),
                           ),
                         ),
@@ -209,15 +198,50 @@ class _SignInState extends State<SignIn> {
             color: Colors.black45,
             fontSize: 19,
           ),
-          suffixIcon: Icon(
-            Icons.visibility_off_outlined,
-            color: color,
-          ),
+          suffixIcon: hint == "Password"
+              ? IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: color,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                )
+              : null,
         ),
         obscureText: obscureText,
         validator: validator,
       ),
     );
+  }
+
+  void _signIn() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => App()),
+        );
+      } on FirebaseAuthException catch (e) {
+        showErrorDialog(context, e.code == 'user-not-found'
+            ? 'No user found for that email.'
+            : e.code == 'wrong-password'
+                ? 'Wrong password provided for that user.'
+                : 'An error occurred. Please try again.');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   void showErrorDialog(BuildContext context, String message) {

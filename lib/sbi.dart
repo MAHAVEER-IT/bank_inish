@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'dart:convert';
 
-import 'expance.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GridItem {
   final String imagePath;
@@ -17,10 +20,10 @@ class GridItem {
   });
 }
 
-class sbi extends StatelessWidget {
+class Sbi extends StatelessWidget {
   final List<GridItem> gridItems;
 
-  sbi() : gridItems = [] {
+  Sbi() : gridItems = [] {
     _initializeGridItems();
   }
 
@@ -30,34 +33,32 @@ class sbi extends StatelessWidget {
         GridItem(
           imagePath: 'images/balance.jpg',
           buttonText: 'Balance Check',
-          onPressed: (content) {
-            _launchDialer('09223766666');
+          onPressed: (context) async {
+            await _launchDialer('09223766666');
           },
           iconData: Icons.phone,
         ),
         GridItem(
           imagePath: 'images/mini.jpg',
           buttonText: 'Mini Statement',
-          onPressed: (content) {
-            _launchDialer('09223866666');
+          onPressed: (context) async {
+            await _launchDialer('09223866666');
           },
           iconData: Icons.phone,
         ),
         GridItem(
           imagePath: 'images/blockatm.jpg',
           buttonText: 'Block ATM',
-          onPressed: (context) {
-            _launchDialer('1800 112 211');
+          onPressed: (context) async {
+            await _launchDialer('1800112211');
           },
           iconData: Icons.phone,
         ),
         GridItem(
           imagePath: 'images/nearbylocation.jpg',
           buttonText: 'Near SBI ATM',
-          onPressed: (context) {
-            _launchGoogleMaps(
-                query:
-                    'near+sbi+atm'); // Call the function with 'sbi+atm' query
+          onPressed: (context) async {
+            await _launchGoogleMaps(query: 'near+sbi+atm');
           },
           iconData: Icons.location_pin,
         ),
@@ -87,34 +88,33 @@ class sbi extends StatelessWidget {
         ),
         GridItem(
           imagePath: 'images/banknear.png',
-          buttonText: 'Near SBI bank',
-          onPressed: (context) {
-            _launchGoogleMaps(
-                query: 'sbi+bank'); // Call the function with 'sbi+bank' query
+          buttonText: 'Near SBI Bank',
+          onPressed: (context) async {
+            await _launchGoogleMaps(query: 'sbi+bank');
           },
           iconData: Icons.location_pin,
         ),
         GridItem(
           imagePath: 'images/custem.png',
-          buttonText: 'Custemor Care',
-          onPressed: (context) {
-            _launchDialer('1800 425 3800');
+          buttonText: 'Customer Care',
+          onPressed: (context) async {
+            await _launchDialer('18004253800');
           },
           iconData: Icons.phone,
         ),
         GridItem(
           imagePath: 'images/expance.png',
-          buttonText: 'Add Expanse',
+          buttonText: 'Add Expenses',
           onPressed: (context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ExpenseTrackerHomePage(),
+                builder: (context) => ExpenseTrackerAppSBI(),
               ),
             );
           },
           iconData: Icons.add,
-        )
+        ),
       ],
     );
   }
@@ -141,7 +141,7 @@ class sbi extends StatelessWidget {
               Image.asset(
                 'images/sbi.png',
                 scale: 45,
-              )
+              ),
             ],
           ),
         ),
@@ -189,8 +189,8 @@ class sbi extends StatelessWidget {
                         height: 40,
                         width: itemWidth,
                         child: ElevatedButton(
-                          onPressed: () {
-                            item.onPressed(context);
+                          onPressed: () async {
+                            await item.onPressed(context);
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
@@ -228,26 +228,26 @@ class sbi extends StatelessWidget {
     );
   }
 
-  void _launchDialer(String phoneNumber) async {
-    final Uri _phoneLaunchUri = Uri(scheme: 'tel', path: phoneNumber);
-    if (await canLaunchUrl(_phoneLaunchUri)) {
-      await launchUrl(_phoneLaunchUri);
+  Future<void> _launchDialer(String phoneNumber) async {
+    final Uri phoneLaunchUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await Permission.phone.request().isGranted) {
+      if (await canLaunchUrl(phoneLaunchUri)) {
+        await launchUrl(phoneLaunchUri);
+      } else {
+        throw 'Could not launch $phoneLaunchUri';
+      }
     } else {
-      throw 'Could not launch $_phoneLaunchUri';
+      throw 'Phone permission not granted';
     }
   }
 
-  void _launchGoogleMaps({String query = ''}) async {
-    // Construct the URL with the search query
+  Future<void> _launchGoogleMaps({String query = ''}) async {
     String url = 'https://www.google.com/maps/search/?api=1&query=$query';
     final Uri mapUri = Uri.parse(url);
 
-    // Check if the URL can be launched
     if (await canLaunchUrl(mapUri)) {
-      // Launch the URL
       await launchUrl(mapUri);
     } else {
-      // Handle error if the URL can't be launched
       throw 'Could not launch $url';
     }
   }
@@ -2219,6 +2219,224 @@ class _BankInterestCalculatorState extends State<BankInterestCalculator> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ExpenseTrackerAppSBI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Expense Tracker',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        hintColor: Colors.amber,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      home: ExpenseTrackerHomePageSBI(),
+    );
+  }
+}
+
+class ExpenseTrackerHomePageSBI extends StatefulWidget {
+  @override
+  _ExpenseTrackerHomePageState createState() => _ExpenseTrackerHomePageState();
+}
+
+class _ExpenseTrackerHomePageState extends State<ExpenseTrackerHomePageSBI> {
+  List<Map<String, dynamic>> _expenses = [];
+  String _selectedType = 'Outgoing';
+
+  final _amountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExpenses();
+  }
+
+  void _addExpense() {
+    final enteredAmount = double.tryParse(_amountController.text);
+
+    if (enteredAmount == null) {
+      return;
+    }
+
+    final newExpense = {
+      'amount': enteredAmount,
+      'type': _selectedType,
+      'date': DateTime.now().toString(),
+    };
+
+    setState(() {
+      _expenses.add(newExpense);
+    });
+
+    _saveExpenses();
+
+    _amountController.clear();
+    Navigator.of(context).pop();
+  }
+
+  void _startAddNewExpense(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(labelText: 'Amount'),
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                ),
+                DropdownButton<String>(
+                  value: _selectedType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedType = newValue!;
+                    });
+                  },
+                  items: <String>['Income', 'Outgoing']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  child: Text('Add Expense'),
+                  onPressed: _addExpense,
+                ),
+              ],
+            ),
+          ),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
+  Future<void> _loadExpenses() async {
+    final prefs = await SharedPreferences.getInstance();
+    final expensesData = prefs.getString('expenses');
+    if (expensesData != null) {
+      setState(() {
+        _expenses = List<Map<String, dynamic>>.from(json.decode(expensesData));
+      });
+    }
+  }
+
+  Future<void> _saveExpenses() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('expenses', json.encode(_expenses));
+  }
+
+  void _deleteExpense(int index) {
+    setState(() {
+      _expenses.removeAt(index);
+    });
+    _saveExpenses();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+            'Add Your Expense',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Image.asset(
+            'images/expance.png',
+            scale: 15,
+          )
+        ]),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewExpense(context),
+          ),
+        ],
+        backgroundColor: Colors.grey[300],
+      ),
+      body: _expenses.isEmpty
+          ? Center(
+              child: Text(
+                'No expenses added yet!',
+                style: TextStyle(fontSize: 20),
+              ),
+            )
+          : ListView.builder(
+              itemCount: _expenses.length,
+              itemBuilder: (ctx, index) {
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: _expenses[index]['type'] == 'Income'
+                          ? Colors.green
+                          : Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            '₹${_expenses[index]['amount']}',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      _expenses[index]['type'],
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd()
+                          .format(DateTime.parse(_expenses[index]['date'])),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => _deleteExpense(index),
+                    ),
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewExpense(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   String _email = '';
   String _password = '';
   String _username = '';
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,7 @@ class _RegisterState extends State<Register> {
                         }
                         _password = value;
                         return null;
-                      }, obscureText: true),
+                      }, obscureText: !_isPasswordVisible),
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
@@ -184,10 +185,19 @@ class _RegisterState extends State<Register> {
             color: Colors.black45,
             fontSize: 19,
           ),
-          suffixIcon: Icon(
-            Icons.visibility_off_outlined,
-            color: color,
-          ),
+          suffixIcon: hint == "Password"
+              ? IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: color,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                )
+              : null,
         ),
         obscureText: obscureText,
         validator: validator,
