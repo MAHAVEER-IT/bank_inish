@@ -2,6 +2,7 @@ import 'package:bank/Utils/colors.dart';
 import 'package:bank/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'indian.dart';
 import 'kvb.dart';
@@ -45,16 +46,6 @@ class _AppState extends State<App> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '${widget.username}!',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
               'Select Your Bank',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -77,7 +68,7 @@ class _AppState extends State<App> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             colors: [
-              backgroundColor2,
+              Color.fromARGB(255, 244, 238, 221),
               Color.fromARGB(255, 244, 221, 214),
               const Color.fromARGB(255, 244, 238, 221),
             ],
@@ -86,146 +77,211 @@ class _AppState extends State<App> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            
+          
             Center(
+              child: Container(
+                decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 239, 150, 78).withOpacity(0.5), // Shadow color
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+                child: SizedBox(
+                  width: 400,
+                  height: 70,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SBIPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.deepOrangeAccent[100], backgroundColor: Colors.white, elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 60),
+                          child: Image.asset(
+                            'images/sbi.png',
+                            height: 40,
+                            width: 40,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Text('STATE BANK OF INDIA',style: TextStyle(fontWeight: FontWeight.bold),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 239, 150, 78).withOpacity(0.5), // Shadow color
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+                child: SizedBox(
+                  width: 400,
+                  height: 70,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => IndianBankPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.deepOrangeAccent[100], backgroundColor: Colors.white, elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 50),
+                          child: Image.asset(
+                            'images/indian.png',
+                            height: 50,
+                            width: 50,
+                          ),
+                        ),
+                  
+                        Padding(
+                          padding: const EdgeInsets.only(right: 80),
+                          child: Text('INDIAN BANK',style: TextStyle(fontWeight: FontWeight.bold),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 239, 150, 78).withOpacity(0.5), 
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), 
+                ),
+              ],
+            ),
               child: SizedBox(
-                width: 250,
-                height: 50,
+               width: 400,
+               height: 70,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SBIPage()),
+                      MaterialPageRoute(builder: (context) => UnionBankPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrangeAccent[100],
-                    foregroundColor: Colors.white,
+                    foregroundColor: Colors.deepOrangeAccent[100], backgroundColor: Colors.white, elevation: 5,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'images/sbi.png',
-                        height: 35,
-                        width: 35,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 70),
+                        child: Image.asset(
+                          'images/union.png',
+                          height: 25,
+                          width: 25,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right:20),
+                        child: Text('UNION BANK OF INDIA',style: TextStyle(fontWeight: FontWeight.bold),),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 239, 150, 78).withOpacity(0.5), 
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), 
+                ),
+              ],
+            ),
+              child: SizedBox(
+                width: 400,
+                  height: 70,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => KarurVysyaBankPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.deepOrangeAccent[100], backgroundColor: Colors.white, elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 60),
+                        child: Image.asset(
+                          'images/kvb.png',
+                          height: 35,
+                          width: 35,
+                        ),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text('STATE BANK OF INDIA'),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 40),
+                        child: Text('KARUR VYSYA BANK',style: TextStyle(fontWeight: FontWeight.bold),),
+                      ),
                     ],
                   ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: SizedBox(
-                width: 250,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => IndianBankPage()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepOrangeAccent[100],
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'images/indian.png',
-                        height: 50,
-                        width: 50,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text('INDIAN BANK'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 250,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UnionBankPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrangeAccent[100],
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'images/union.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('UNION BANK OF INDIA'),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 250,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => KarurVysyaBankPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrangeAccent[100],
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'images/kvb.png',
-                      height: 35,
-                      width: 35,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('KARUR VYSYA BANK'),
-                  ],
                 ),
               ),
             ),
@@ -271,3 +327,4 @@ class KarurVysyaBankPage extends StatelessWidget {
     );
   }
 }
+

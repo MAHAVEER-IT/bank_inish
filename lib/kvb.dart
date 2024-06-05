@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +70,7 @@ class kvb extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BankInterestCalculator(),
+                builder: (context) => LoanCalculatorPage(),
               ),
             );
           },
@@ -256,14 +256,141 @@ class kvb extends StatelessWidget {
   }
 }
 
-class holiday extends StatefulWidget {
-  const holiday({super.key});
+class HolidayGridItem {
+  final String buttonText;
+  final Function(BuildContext) onPressed;
+  final IconData iconData;
 
+  HolidayGridItem({
+    required this.buttonText,
+    required this.onPressed,
+    required this.iconData,
+  });
+}
+
+class holiday extends StatefulWidget {
   @override
   State<holiday> createState() => _holidayState();
 }
 
 class _holidayState extends State<holiday> {
+  final List<HolidayGridItem> gridItems;
+
+  _holidayState() : gridItems = [] {
+    _initializeGridItems();
+  }
+
+  void _initializeGridItems() {
+    gridItems.addAll(
+      [
+        HolidayGridItem(
+          buttonText: 'January',
+          onPressed: (context) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HolidayScreen()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'February',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => feb()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'March',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => march()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'April',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => april()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'May',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => may()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'June',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => june()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'July',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => july()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'August',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => augest()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'September',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => september()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'October',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => october()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'November',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => november()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'December',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => december()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+        HolidayGridItem(
+          buttonText: 'WEEK-END',
+          onPressed: (context) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => week()));
+          },
+          iconData: Icons.date_range_outlined,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,552 +409,65 @@ class _holidayState extends State<holiday> {
         ),
         backgroundColor: Colors.lime,
       ),
-      backgroundColor: Colors.lime[100],
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 10,
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 100, left: 15, right: 15),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: 1, // Ensure the grid items are square
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HolidayScreen()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
+          itemCount: gridItems.length,
+          itemBuilder: (context, int i) {
+            final item = gridItems[i];
+            return InkWell(
+              onTap: () async {
+                await item.onPressed(context);
+              },
+              child: ClipOval(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.lime.shade100,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(3, 3),
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          item.iconData,
+                          size: 40,
+                          color: Colors.black,
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('1.JANUARY'),
-                          SizedBox(
-                            width: 30,
+                        SizedBox(height: 10),
+                        Text(
+                          item.buttonText,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => feb(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('2.February'),
-                          SizedBox(
-                            width: 30,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => march(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('3.MARCH'),
-                          SizedBox(
-                            width: 30,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => april(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('4.APRIL'),
-                          SizedBox(
-                            width: 38,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => may(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('5.MAY'),
-                          SizedBox(
-                            width: 48,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => june(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('6.JUNE'),
-                          SizedBox(
-                            width: 48,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => july(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('7.JULY'),
-                          SizedBox(
-                            width: 48,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => augest(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('8.AUGUST'),
-                          SizedBox(
-                            width: 26,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => september(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('9.SEPTEMBER'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => october(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('10.OCTOBER'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => november(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('11.NOVEMBER'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => december(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('12.DECEMBER'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 380,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => week(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lime,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Set this to 0.0 for a square shape
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('WEEK-END'),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Icon(Icons.calendar_month),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
   }
 }
-
 class Holiday {
   final String date;
   final String holiday;
@@ -2131,100 +1771,259 @@ class week extends StatelessWidget {
   }
 }
 
-class BankInterestCalculator extends StatefulWidget {
-  @override
-  _BankInterestCalculatorState createState() => _BankInterestCalculatorState();
+enum LoanType {
+  Secured,
+  Unsecured,
+  Insta,
+  BonVoyage,
+  Quick,
 }
 
-class _BankInterestCalculatorState extends State<BankInterestCalculator> {
-  double principal = 0.0;
-  double rate = 0.0;
-  int years = 0;
-  double interest = 0.0;
-  double totalAmount = 0.0;
+class LoanCalculatorPage extends StatefulWidget {
+  @override
+  _LoanCalculatorPageState createState() => _LoanCalculatorPageState();
+}
 
-  void calculateInterest() {
-    setState(() {
-      interest = (principal * rate * years) / 100;
-      totalAmount = principal + interest;
-    });
+class _LoanCalculatorPageState extends State<LoanCalculatorPage> {
+  final TextEditingController loanAmountController = TextEditingController();
+  final TextEditingController tenureController = TextEditingController();
+  final TextEditingController interestRateController = TextEditingController();
+  final TextEditingController processingFeeController = TextEditingController();
+
+  double emi = 0;
+  LoanType selectedLoanType = LoanType.Secured;
+
+  void calculateEMI() {
+    double loanAmount = double.tryParse(loanAmountController.text) ?? 0;
+    double interestRate = double.tryParse(interestRateController.text) ?? 0;
+    double tenure = double.tryParse(tenureController.text) ?? 0;
+    double processingFee = double.tryParse(processingFeeController.text) ?? 0;
+
+    if (loanAmount > 0 && interestRate > 0 && tenure > 0) {
+      double monthlyInterestRate = interestRate / (12 * 100);
+      double emiNumerator = loanAmount * monthlyInterestRate *
+          (pow(1 + monthlyInterestRate, tenure) / (pow(1 + monthlyInterestRate, tenure) - 1));
+      double emiAmount = emiNumerator + processingFee;
+      setState(() {
+        emi = emiAmount;
+      });
+    } else {
+      setState(() {
+        emi = 0;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Bank Interest Calculator',
-                style: TextStyle(fontWeight: FontWeight.bold),
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text('KVB Loan EMI Calculator',style: TextStyle(fontWeight: FontWeight.bold),)),
+        backgroundColor: Colors.lime,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left: 250),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoanSchemeDetailPage()));
+                  },
+                  child: Text(
+                    'Details here',
+                    style: TextStyle(color: Colors.lightBlueAccent),
+                  ),
+                ),
               ),
-              SizedBox(
-                height: 30,
-                width: 30,
-                child: Icon(Icons.calculate_outlined),
+            SizedBox(height: 120,),
+            DropdownButtonFormField<LoanType>(
+              value: selectedLoanType,
+              onChanged: (newValue) {
+                setState(() {
+                  selectedLoanType = newValue!;
+                });
+              },
+              items: LoanType.values.map((loanType) {
+                return DropdownMenuItem<LoanType>(
+                  value: loanType,
+                  child: Text(loanType.toString().split('.').last),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16),
+            TextFormField(
+              controller: loanAmountController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Loan Amount (Rs)',
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-          backgroundColor: Colors.lime[100],
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'Principal'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    principal = double.parse(value);
-                  });
-                },
+            ),
+            SizedBox(height: 16),
+            TextFormField(
+              controller: tenureController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Tenure (Years)',
+                border: OutlineInputBorder(),
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Interest Rate (%)'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    rate = double.parse(value);
-                  });
-                },
+            ),
+            SizedBox(height: 16),
+            TextFormField(
+              controller: interestRateController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Interest Rate (%)',
+                border: OutlineInputBorder(),
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Years'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    years = int.parse(value);
-                  });
-                },
+            ),
+            SizedBox(height: 16),
+            TextFormField(
+              controller: processingFeeController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Processing Fee (Rs)',
+                border: OutlineInputBorder(),
               ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: calculateInterest,
-                child: Text('Calculate'),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              child: ElevatedButton(
+                onPressed: calculateEMI,
+                child: Text('Calculate EMI'),
               ),
-              SizedBox(height: 20.0),
-              Text(
-                'Interest: $interest',
-                style: TextStyle(fontSize: 18),
-              ),
-              Text(
-                'Total Amount: $totalAmount',
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'EMI: ₹ ${emi.toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+class LoanSchemeDetailPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Loan Schemes Details'),
+      ),
+      body: ListView.builder(
+        itemCount: loanSchemes.length,
+        itemBuilder: (context, index) {
+          final scheme = loanSchemes[index];
+          return Card(
+            elevation: 3,
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    scheme.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Loan Amount: ${scheme.loanAmount}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Tenure: ${scheme.tenure}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Interest Rate: ${scheme.interestRate}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Processing Charges: ${scheme.processingCharges}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Special Details: ${scheme.specialDetails}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class LoanScheme {
+  final String title;
+  final String loanAmount;
+  final String tenure;
+  final String interestRate;
+  final String processingCharges;
+  final String specialDetails;
+
+  LoanScheme({
+    required this.title,
+    required this.loanAmount,
+    required this.tenure,
+    required this.interestRate,
+    required this.processingCharges,
+    required this.specialDetails,
+  });
+}
+
+final List<LoanScheme> loanSchemes = [
+  LoanScheme(
+    title: 'KVB Personal Loan for Salaried and Self-employed',
+    loanAmount: 'Up to Rs 10 Lakh',
+    tenure: 'Up to 5 years',
+    interestRate: '12% p.a. to 19% p.a.',
+    processingCharges: '1.50%',
+    specialDetails: 'Quick, efficient, and paperless procedures with in-principle sanctions in about 15 minutes.',
+  ),
+  LoanScheme(
+    title: 'KVB Insta Loan',
+    loanAmount: 'Varies',
+    tenure: 'Up to 72 months or remaining service period',
+    interestRate: '11% p.a.',
+    processingCharges: 'Varies',
+    specialDetails: 'Available for permanent employees of reputable firms, institutes, and government agencies.',
+  ),
+  LoanScheme(
+    title: 'KVB Bon Voyage Scheme',
+    loanAmount: 'Varies',
+    tenure: 'Up to 36 months',
+    interestRate: 'At the discretion of the bank',
+    processingCharges: 'Varies',
+    specialDetails: 'Designed to cover travel expenses to a foreign destination.',
+  ),
+  LoanScheme(
+    title: 'KVB Quick Loan',
+    loanAmount: 'Up to Rs 25 Lakh',
+    tenure: 'Up to 60 months',
+    interestRate: '9.40% p.a. - 11.00% p.a.',
+    processingCharges: 'Varies',
+    specialDetails: 'Bonds issued by the federal and state governments can be pledged as collateral.',
+  ),
+];
 
 class ExpenseTrackerAppKVB extends StatelessWidget {
   @override

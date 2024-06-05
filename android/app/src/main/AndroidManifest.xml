@@ -2,6 +2,10 @@
     package="com.example.bank">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
 
     <application
         android:label="BANK INSIGHT"
@@ -26,6 +30,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCssH3VLs27VYt8kHvUEozh4tDBwedZluQ"/>    
     </application>
 
     <!-- Required to query activities that can process text -->
@@ -45,4 +51,6 @@
             <data android:scheme="https"/>
         </intent>
     </queries>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>
