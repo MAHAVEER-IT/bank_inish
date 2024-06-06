@@ -38,7 +38,7 @@ class kvb extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/mini.jpg',
+          imagePath: 'images/mini.png',
           buttonText: 'Mini Statement',
           onPressed: (content) {
             _launchDialer('09223866666');
@@ -54,12 +54,26 @@ class kvb extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.png',
-          buttonText: 'Near KVB ATM',
+          imagePath: 'images/custem.png',
+          buttonText: 'Customer Care',
           onPressed: (context) {
-            _launchGoogleMaps(
-                query:
-                    'near+kvb+atm'); // Call the function with 'sbi+atm' query
+            _launchDialer('1800 425 3800');
+          },
+          iconData: Icons.phone,
+        ),
+        GridItem(
+          imagePath: 'images/nearbylocation.png',
+          buttonText: 'KVB ATM',
+          onPressed: (context) {
+            _launchGoogleMaps(destination: 'Near KARUR VYSYA Bank ATM');
+          },
+          iconData: Icons.location_pin,
+        ),
+        GridItem(
+          imagePath: 'images/banknear.png',
+          buttonText: '',
+          onPressed: (context) {
+            _launchGoogleMaps(destination: 'Near KARUR VYSYA Bank');
           },
           iconData: Icons.location_pin,
         ),
@@ -87,37 +101,6 @@ class kvb extends StatelessWidget {
           },
           iconData: Icons.date_range,
         ),
-        GridItem(
-          imagePath: 'images/banknear.png',
-          buttonText: 'Near KVB bank',
-          onPressed: (context) {
-            _launchGoogleMaps(
-                query:
-                    'KARURVYSYA+bank'); // Call the function with 'sbi+bank' query
-          },
-          iconData: Icons.location_pin,
-        ),
-        GridItem(
-          imagePath: 'images/custem.png',
-          buttonText: 'Customer Care',
-          onPressed: (context) {
-            _launchDialer('1800 425 3800');
-          },
-          iconData: Icons.phone,
-        ),
-        GridItem(
-          imagePath: 'images/expance.png',
-          buttonText: 'Add Expenses',
-          onPressed: (context) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExpenseTrackerAppKVB(),
-              ),
-            );
-          },
-          iconData: Icons.add,
-        )
       ],
     );
   }
@@ -197,7 +180,8 @@ class kvb extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: const Color.fromARGB(255, 13, 13, 13),
+                            backgroundColor:
+                                const Color.fromARGB(255, 13, 13, 13),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -240,9 +224,10 @@ class kvb extends StatelessWidget {
     }
   }
 
-  void _launchGoogleMaps({String query = ''}) async {
-    // Construct the URL with the search query
-    String url = 'https://www.google.com/maps/search/?api=1&query=$query';
+  void _launchGoogleMaps({required String destination}) async {
+    // Construct the URL for directions
+    String url =
+        'https://www.google.com/maps/dir/?api=1&destination=$destination&travelmode=driving';
     final Uri mapUri = Uri.parse(url);
 
     // Check if the URL can be launched
@@ -468,6 +453,7 @@ class _holidayState extends State<holiday> {
     );
   }
 }
+
 class Holiday {
   final String date;
   final String holiday;
@@ -1801,8 +1787,10 @@ class _LoanCalculatorPageState extends State<LoanCalculatorPage> {
 
     if (loanAmount > 0 && interestRate > 0 && tenure > 0) {
       double monthlyInterestRate = interestRate / (12 * 100);
-      double emiNumerator = loanAmount * monthlyInterestRate *
-          (pow(1 + monthlyInterestRate, tenure) / (pow(1 + monthlyInterestRate, tenure) - 1));
+      double emiNumerator = loanAmount *
+          monthlyInterestRate *
+          (pow(1 + monthlyInterestRate, tenure) /
+              (pow(1 + monthlyInterestRate, tenure) - 1));
       double emiAmount = emiNumerator + processingFee;
       setState(() {
         emi = emiAmount;
@@ -1818,7 +1806,11 @@ class _LoanCalculatorPageState extends State<LoanCalculatorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('KVB Loan EMI Calculator',style: TextStyle(fontWeight: FontWeight.bold),)),
+        title: Center(
+            child: Text(
+          'KVB Loan EMI Calculator',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
         backgroundColor: Colors.lime,
       ),
       body: Padding(
@@ -1827,21 +1819,23 @@ class _LoanCalculatorPageState extends State<LoanCalculatorPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-                padding: const EdgeInsets.only(left: 250),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoanSchemeDetailPage()));
-                  },
-                  child: Text(
-                    'Details here',
-                    style: TextStyle(color: Colors.lightBlueAccent),
-                  ),
+              padding: const EdgeInsets.only(left: 250),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LoanSchemeDetailPage()));
+                },
+                child: Text(
+                  'Details here',
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
-            SizedBox(height: 120,),
+            ),
+            SizedBox(
+              height: 120,
+            ),
             DropdownButtonFormField<LoanType>(
               value: selectedLoanType,
               onChanged: (newValue) {
@@ -1997,7 +1991,8 @@ final List<LoanScheme> loanSchemes = [
     tenure: 'Up to 5 years',
     interestRate: '12% p.a. to 19% p.a.',
     processingCharges: '1.50%',
-    specialDetails: 'Quick, efficient, and paperless procedures with in-principle sanctions in about 15 minutes.',
+    specialDetails:
+        'Quick, efficient, and paperless procedures with in-principle sanctions in about 15 minutes.',
   ),
   LoanScheme(
     title: 'KVB Insta Loan',
@@ -2005,7 +2000,8 @@ final List<LoanScheme> loanSchemes = [
     tenure: 'Up to 72 months or remaining service period',
     interestRate: '11% p.a.',
     processingCharges: 'Varies',
-    specialDetails: 'Available for permanent employees of reputable firms, institutes, and government agencies.',
+    specialDetails:
+        'Available for permanent employees of reputable firms, institutes, and government agencies.',
   ),
   LoanScheme(
     title: 'KVB Bon Voyage Scheme',
@@ -2013,7 +2009,8 @@ final List<LoanScheme> loanSchemes = [
     tenure: 'Up to 36 months',
     interestRate: 'At the discretion of the bank',
     processingCharges: 'Varies',
-    specialDetails: 'Designed to cover travel expenses to a foreign destination.',
+    specialDetails:
+        'Designed to cover travel expenses to a foreign destination.',
   ),
   LoanScheme(
     title: 'KVB Quick Loan',
@@ -2021,7 +2018,8 @@ final List<LoanScheme> loanSchemes = [
     tenure: 'Up to 60 months',
     interestRate: '9.40% p.a. - 11.00% p.a.',
     processingCharges: 'Varies',
-    specialDetails: 'Bonds issued by the federal and state governments can be pledged as collateral.',
+    specialDetails:
+        'Bonds issued by the federal and state governments can be pledged as collateral.',
   ),
 ];
 

@@ -40,7 +40,7 @@ class first extends StatelessWidget {
                     bottomRight: Radius.circular(40),
                   ),
                   color: Colors.deepOrangeAccent,
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     image: AssetImage(
                       "images/image.png",
                     ),

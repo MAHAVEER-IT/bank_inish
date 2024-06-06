@@ -2,12 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -44,7 +39,7 @@ class Sbi extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/mini.jpg',
+          imagePath: 'images/mini.png',
           buttonText: 'Mini Statement',
           onPressed: (context) async {
             await _launchDialer('09223866666');
@@ -60,11 +55,26 @@ class Sbi extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
+          imagePath: 'images/custem.png',
+          buttonText: 'Customer Care',
+          onPressed: (context) async {
+            await _launchDialer('18004253800');
+          },
+          iconData: Icons.phone,
+        ),
+        GridItem(
           imagePath: 'images/nearbylocation.png',
-          buttonText: 'Near SBI ATM',
+          buttonText: 'SBI ATM',
           onPressed: (context) {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyAppSBI()));
+            _launchGoogleMaps(destination: 'near sbi ATM');
+          },
+          iconData: Icons.location_pin,
+        ),
+        GridItem(
+          imagePath: 'images/banknear.png',
+          buttonText: 'SBI Bank',
+          onPressed: (context) {
+            _launchGoogleMaps(destination: 'near sbi bank');
           },
           iconData: Icons.location_pin,
         ),
@@ -91,35 +101,6 @@ class Sbi extends StatelessWidget {
             );
           },
           iconData: Icons.date_range,
-        ),
-        GridItem(
-          imagePath: 'images/banknear.png',
-          buttonText: 'Near SBI Bank',
-          onPressed: (context) async {
-            await _launchGoogleMaps(query: 'sbi+bank');
-          },
-          iconData: Icons.location_pin,
-        ),
-        GridItem(
-          imagePath: 'images/custem.png',
-          buttonText: 'Customer Care',
-          onPressed: (context) async {
-            await _launchDialer('18004253800');
-          },
-          iconData: Icons.phone,
-        ),
-        GridItem(
-          imagePath: 'images/expance.png',
-          buttonText: 'Add Expenses',
-          onPressed: (context) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => walletMyApp(),
-              ),
-            );
-          },
-          iconData: Icons.add,
         ),
       ],
     );
@@ -247,13 +228,18 @@ class Sbi extends StatelessWidget {
     }
   }
 
-  Future<void> _launchGoogleMaps({String query = ''}) async {
-    String url = 'https://www.google.com/maps/search/?api=1&query=$query';
+  void _launchGoogleMaps({required String destination}) async {
+    // Construct the URL for directions
+    String url =
+        'https://www.google.com/maps/dir/?api=1&destination=$destination&travelmode=driving';
     final Uri mapUri = Uri.parse(url);
 
+    // Check if the URL can be launched
     if (await canLaunchUrl(mapUri)) {
+      // Launch the URL
       await launchUrl(mapUri);
     } else {
+      // Handle error if the URL can't be launched
       throw 'Could not launch $url';
     }
   }
@@ -1808,18 +1794,9 @@ class _LoanCalculatorState extends State<LoanCalculator> {
     'Xpress Credit - Other Corporates': [12.30, 14.30],
     'Xpress Elite - SBI Salary Account': [11.15, 11.65],
     'Xpress Elite - Other Bank Salary Account': [11.40, 11.90],
-    'Xpress Flexi': [
-      11.40,
-      13.80
-    ],
-    'Xpress Lite': [
-      12.15,
-      14.80
-    ],
-    'Quick Personal Loan': [
-      11.40,
-      14.80
-    ],
+    'Xpress Flexi': [11.40, 13.80],
+    'Xpress Lite': [12.15, 14.80],
+    'Quick Personal Loan': [11.40, 14.80],
     'Xpress Credit Insta Top-Up': [12.40, 12.40],
     'Pre-Approved Personal Loans': [13.80, 14.30],
     'Pension Loan Schemes': [11.30, 11.80],
@@ -1931,8 +1908,10 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                 width: 10,
                 child: TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.lightBlue),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: _calculateEMI,
                   child: Text(
@@ -2064,10 +2043,6 @@ final List<LoanScheme> loanSchemes = [
     effectiveInterestRate: 'Depends on the specific pension loan scheme',
   ),
 ];
-
-
-
-
 
 class walletMyApp extends StatelessWidget {
   @override
@@ -2255,198 +2230,6 @@ class _WalletHomePageState extends State<WalletHomePage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MyAppSBI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MapScreen(),
-    );
-  }
-}
-
-class MapScreen extends StatefulWidget {
-  @override
-  _MapScreenState createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreen> {
-  GoogleMapController? _controller;
-  Position? _currentPosition;
-  Set<Marker> _markers = {};
-  List<LatLng> _polylineCoordinates = [];
-  final String _apiKey = 'AIzaSyCssH3VLs27VYt8kHvUEozh4tDBwedZluQ';
-
-  @override
-  void initState() {
-    super.initState();
-    _getCurrentLocation();
-  }
-
-  Future<void> _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Location services are disabled.');
-      return;
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      print(
-          'Location permissions are permanently denied, we cannot request permissions.');
-      return;
-    }
-
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        _currentPosition = position;
-      });
-
-      if (_controller != null) {
-        _controller!.animateCamera(
-          CameraUpdate.newLatLng(
-            LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-          ),
-        );
-      }
-
-      _fetchNearbyAtms();
-    } catch (e) {
-      print('Failed to get current location: $e');
-    }
-  }
-
-  Future<void> _fetchNearbyAtms() async {
-    if (_currentPosition == null) return;
-
-    final String url =
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-        'location=${_currentPosition!.latitude},${_currentPosition!.longitude}'
-        '&radius=5000'
-        '&keyword=SBI+ATM'
-        '&key=$_apiKey';
-
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        if (data['results'] != null) {
-          setState(() {
-            _markers.clear();
-            for (var result in data['results']) {
-              _markers.add(Marker(
-                markerId: MarkerId(result['place_id']),
-                position: LatLng(result['geometry']['location']['lat'],
-                    result['geometry']['location']['lng']),
-                infoWindow: InfoWindow(title: result['name']),
-              ));
-            }
-            if (data['results'].isNotEmpty) {
-              _getDirections(
-                data['results'][0]['geometry']['location']['lat'],
-                data['results'][0]['geometry']['location']['lng'],
-              );
-            }
-          });
-        }
-      } else {
-        print('Failed to fetch nearby ATMs: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching nearby ATMs: $e');
-    }
-  }
-
-  Future<void> _getDirections(
-      double destinationLat, double destinationLng) async {
-    if (_currentPosition == null) return;
-
-    final String url = 'https://maps.googleapis.com/maps/api/directions/json?'
-        'origin=${_currentPosition!.latitude},${_currentPosition!.longitude}'
-        '&destination=$destinationLat,$destinationLng'
-        '&key=$_apiKey';
-
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        if (data['routes'] != null && data['routes'].isNotEmpty) {
-          setState(() {
-            _polylineCoordinates.clear();
-            for (var leg in data['routes'][0]['legs']) {
-              for (var step in leg['steps']) {
-                _polylineCoordinates.add(LatLng(
-                  step['start_location']['lat'],
-                  step['start_location']['lng'],
-                ));
-                _polylineCoordinates.add(LatLng(
-                  step['end_location']['lat'],
-                  step['end_location']['lng'],
-                ));
-              }
-            }
-          });
-        }
-      } else {
-        print('Failed to fetch directions: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching directions: $e');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Nearby SBI ATMs')),
-      body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
-          : GoogleMap(
-              onMapCreated: (controller) {
-                _controller = controller;
-                if (_currentPosition != null) {
-                  _controller!.animateCamera(
-                    CameraUpdate.newLatLng(
-                      LatLng(_currentPosition!.latitude,
-                          _currentPosition!.longitude),
-                    ),
-                  );
-                }
-              },
-              initialCameraPosition: CameraPosition(
-                target: LatLng(_currentPosition?.latitude ?? 0,
-                    _currentPosition?.longitude ?? 0),
-                zoom: 14,
-              ),
-              markers: _markers,
-              polylines: {
-                Polyline(
-                  polylineId: PolylineId('route'),
-                  points: _polylineCoordinates,
-                  color: Colors.blue,
-                  width: 5,
-                ),
-              },
-              myLocationEnabled: true,
-            ),
     );
   }
 }

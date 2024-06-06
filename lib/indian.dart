@@ -38,7 +38,7 @@ class india extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/mini.jpg',
+          imagePath: 'images/mini.png',
           buttonText: 'Mini Statement',
           onPressed: (content) {
             _launchDialer('09289592895');
@@ -54,14 +54,29 @@ class india extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.png',
-          buttonText: 'Indian ATM',
+          imagePath: 'images/custem.png',
+          buttonText: 'Custemor Care',
           onPressed: (context) {
-            _launchGoogleMaps(
-                query: 'sbi+atm'); // Call the function with 'sbi+atm' query
+            _launchDialer('1800 425 4422');
           },
-          iconData: Icons.location_pin,
+          iconData: Icons.phone,
         ),
+        GridItem(
+              imagePath: 'images/nearbylocation.png',
+              buttonText: 'Indian ATM',
+              onPressed: (context) {
+                _launchGoogleMaps(destination: 'Indian bank ATM');
+              },
+              iconData: Icons.location_pin,
+            ),
+            GridItem(
+              imagePath: 'images/banknear.png',
+              buttonText: 'Indian Bank',
+              onPressed: (context) {
+                _launchGoogleMaps(destination: 'Indian Bank');
+              },
+              iconData: Icons.location_pin,
+            ),
         GridItem(
           imagePath: 'images/calculator.png',
           buttonText: 'Calculator',
@@ -86,36 +101,9 @@ class india extends StatelessWidget {
           },
           iconData: Icons.date_range,
         ),
-        GridItem(
-          imagePath: 'images/banknear.png',
-          buttonText: 'Indian Bank',
-          onPressed: (context) {
-            _launchGoogleMaps(
-                query: 'sbi+bank'); // Call the function with 'sbi+bank' query
-          },
-          iconData: Icons.location_pin,
-        ),
-        GridItem(
-          imagePath: 'images/custem.png',
-          buttonText: 'Custemor Care',
-          onPressed: (context) {
-            _launchDialer('1800 425 4422');
-          },
-          iconData: Icons.phone,
-        ),
-        GridItem(
-          imagePath: 'images/expance.png',
-          buttonText: 'Add Expanse',
-          onPressed: (context) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExpenseTrackerAppIn(),
-              ),
-            );
-          },
-          iconData: Icons.add,
-        )
+        
+        
+        
       ],
     );
   }
@@ -239,10 +227,10 @@ class india extends StatelessWidget {
     }
   }
 
-  void _launchGoogleMaps({String query = ''}) async {
-    // Construct the URL with the search query
+  void _launchGoogleMaps({required String destination}) async {
+    // Construct the URL for directions
     String url =
-        'https://www.google.com/maps/search/indian+bank+atm+near+me/@10.6071902,77.3294018,9z/data=!3m1!4b1?entry=ttu';
+        'https://www.google.com/maps/dir/?api=1&destination=$destination&travelmode=driving';
     final Uri mapUri = Uri.parse(url);
 
     // Check if the URL can be launched

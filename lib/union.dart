@@ -38,7 +38,7 @@ class union extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/mini.jpg',
+          imagePath: 'images/mini.png',
           buttonText: 'Mini Statement',
           onPressed: (content) {
             _launchDialer('9345713738');
@@ -54,12 +54,26 @@ class union extends StatelessWidget {
           iconData: Icons.phone,
         ),
         GridItem(
-          imagePath: 'images/nearbylocation.png',
-          buttonText: 'UNION ATM',
+          imagePath: 'images/custem.png',
+          buttonText: 'Customer Care',
           onPressed: (context) {
-            _launchGoogleMaps(
-                query:
-                    'near+union+atm'); // Call the function with 'sbi+atm' query
+            _launchDialer('1800 22 2244');
+          },
+          iconData: Icons.phone,
+        ),
+        GridItem(
+          imagePath: 'images/nearbylocation.png',
+          buttonText: 'Union ATM',
+          onPressed: (context) {
+            _launchGoogleMaps(destination: 'near union bank ATM');
+          },
+          iconData: Icons.location_pin,
+        ),
+        GridItem(
+          imagePath: 'images/banknear.png',
+          buttonText: 'Union Bank',
+          onPressed: (context) {
+            _launchGoogleMaps(destination: 'near union bank');
           },
           iconData: Icons.location_pin,
         ),
@@ -87,37 +101,6 @@ class union extends StatelessWidget {
           },
           iconData: Icons.date_range,
         ),
-        GridItem(
-          imagePath: 'images/banknear.png',
-          buttonText: 'UNION BANK',
-          onPressed: (context) {
-            _launchGoogleMaps(
-                query:
-                    'near+union+bank'); // Call the function with 'sbi+bank' query
-          },
-          iconData: Icons.location_pin,
-        ),
-        GridItem(
-          imagePath: 'images/custem.png',
-          buttonText: 'Customer Care',
-          onPressed: (context) {
-            _launchDialer('1800 22 2244');
-          },
-          iconData: Icons.phone,
-        ),
-        GridItem(
-          imagePath: 'images/expance.png',
-          buttonText: 'Add Expenses',
-          onPressed: (context) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExpenseTrackerHomePageUN(),
-              ),
-            );
-          },
-          iconData: Icons.add,
-        )
       ],
     );
   }
@@ -241,9 +224,10 @@ class union extends StatelessWidget {
     }
   }
 
-  void _launchGoogleMaps({String query = ''}) async {
-    // Construct the URL with the search query
-    String url = 'https://www.google.com/maps/search/?api=1&query=$query';
+  void _launchGoogleMaps({required String destination}) async {
+    // Construct the URL for directions
+    String url =
+        'https://www.google.com/maps/dir/?api=1&destination=$destination&travelmode=driving';
     final Uri mapUri = Uri.parse(url);
 
     // Check if the URL can be launched
@@ -1773,8 +1757,6 @@ class week extends StatelessWidget {
   }
 }
 
-
-
 class LoanCalculatorPage extends StatefulWidget {
   @override
   _LoanCalculatorPageState createState() => _LoanCalculatorPageState();
@@ -1839,7 +1821,9 @@ class _LoanCalculatorPageState extends State<LoanCalculatorPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 100,),
+              SizedBox(
+                height: 100,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: DropdownButtonFormField<String>(
@@ -2047,7 +2031,8 @@ final List<LoanScheme> loanSchemes = [
     loanAmount: 'Up to Rs. 10 lakhs',
     tenure: '3 to 5 years',
     interestRate: '10.30% - 11.40% p.a.',
-    specialDetails: 'Covers personal needs such as medical, travel, or emergency',
+    specialDetails:
+        'Covers personal needs such as medical, travel, or emergency',
   ),
   LoanScheme(
     title: 'Union Women Professional Personal Loan Scheme',
@@ -2061,7 +2046,8 @@ final List<LoanScheme> loanSchemes = [
     loanAmount: 'Up to Rs. 15 lakhs',
     tenure: 'Up to 5 years',
     interestRate: '14.30% - 14.40% p.a.',
-    specialDetails: 'Collateral-free personal loan for self-employed/non-salaried persons',
+    specialDetails:
+        'Collateral-free personal loan for self-employed/non-salaried persons',
   ),
 ];
 
